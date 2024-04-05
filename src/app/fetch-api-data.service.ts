@@ -6,6 +6,8 @@ import { map, catchError, tap } from 'rxjs/operators';
 //Declaring the api url that will provide data for the client app
 const apiUrl = 'https://movie-api-lina-834bc70d6952.herokuapp.com/';
 
+// const apiUrl = 'http://localhost:8080/';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,8 +24,8 @@ export class UserRegistrationService {
       console.error('Some error occurred:', error.error.message);
     } else {
       console.error(
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`);
+        `Backend returned error code ${error.status}, ` +
+        `body was: ${JSON.stringify(error.error)}`);
     }
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
@@ -43,7 +45,7 @@ export class UserRegistrationService {
   }
 
   public userLogin(userDetails: any): Observable<any> {
-    console.log(userDetails);
+    // console.log(userDetails);
     return this.http.post(apiUrl + 'users/login', userDetails).pipe(
       catchError(this.handleError)
     );

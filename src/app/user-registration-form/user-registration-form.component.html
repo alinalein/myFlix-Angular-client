@@ -7,11 +7,15 @@
             <mat-form-field>
                 <input matInput [(ngModel)]="userData.Username" placeholder="Username" type="text" name="Username"
                     required>
+                <mat-hint align="start">At least 5 characters.</mat-hint>
             </mat-form-field>
+            <div style="margin-bottom: 10px;"></div>
             <mat-form-field>
                 <input matInput [(ngModel)]="userData.Password" type="password" placeholder="Password" name="Password"
                     required>
+                <mat-hint align="start">At least 8 characters.</mat-hint>
             </mat-form-field>
+            <div style="margin-bottom: 10px;"></div>
             <mat-form-field>
                 <input matInput [(ngModel)]="userData.Email" type="email" placeholder="Email" name="Email" required>
             </mat-form-field>
