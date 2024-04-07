@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 // You'll use this import to close the dialog on success
 import { MatDialogRef } from '@angular/material/dialog';
@@ -14,14 +15,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './user-login-form.component.html',
   styleUrl: './user-login-form.component.scss'
 })
-export class UserLoginFormComponent {
+export class UserLoginFormComponent implements OnInit {
   @Input() userData = { Username: '', Password: '' };
 
   // params
   constructor(
     public userRegistrationService: UserRegistrationService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class UserLoginFormComponent {
         this.dialogRef.close(); // This will close the modal on success!
 
         this.snackBar.open('User logged in successfully', 'OK', { duration: 2000 });
+        this.router.navigate(['movies']);
       },
       error: (result) => {
         this.snackBar.open(result, 'OK', {
