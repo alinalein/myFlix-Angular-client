@@ -179,12 +179,7 @@ export class UserRegistrationService {
         })
     }).pipe(
       map(this.extractResponseData),
-      catchError(this.handleError),
-      tap(() => {
-        if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-        }
-      })
+      catchError(this.handleError)
     );
   }
 }

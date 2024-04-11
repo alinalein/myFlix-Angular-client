@@ -7,6 +7,7 @@ import { MovieSynopsisComponent } from '../movie-synopsis/movie-synopsis.compone
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
@@ -22,20 +23,21 @@ export class MovieCardComponent implements OnInit {
     public snackBar: MatSnackBar,
   ) { }
 
+  //call those functions when component mounted
   ngOnInit(): void {
     this.getMovies();
-    this.getUsersFavMovies();
   }
 
   getMovies(): void {
-    this.userRegistrationService.getAllMovies().subscribe(
+    this.userRegistrationService.getAllMovies().pipe(
+      catchError(error => {
+        console.error('Error fetching favorite movies:', error);
+        return of([]);
+      })
+    ).subscribe(
       (resp: any) => {
         this.movies = resp;
-        // console.log(`all movies: ${this.movies}`);
         console.log(this.movies)
-      },
-      (error) => {
-        console.error('Error fetching all movies:', error);
       }
     );
   }
@@ -53,40 +55,44 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  isMovieInFavs(movieId: string): boolean {
+    return this.favMovies.includes(movieId);
+  }
+
   toggleMovieInFavs(movieId: string): void {
-    if (movieId && this.favMovies) {
-      const index = this.favMovies.findIndex(movie => movie._id === movieId);
-      if (index !== -1) {
-        // If movie is in favMovies, remove it
-        console.log('Deleted')
-        this.deleteMovieFromFavs(movieId);
-      } else {
-        // If movie is not in favMovies, add it
-        this.addMovieToFavs(movieId);
-        console.log('Added')
-      }
+    const movieInFavs = this.isMovieInFavs(movieId);
+    if (movieInFavs) {
+      // If movie is in favMovies, remove it
+      console.log('Deleted');
+      this.deleteMovieFromFavs(movieId);
+    } else {
+      // If movie is not in favMovies, add it
+      console.log('Added');
+      this.addMovieToFavs(movieId);
     }
   }
 
   addMovieToFavs(MovieID: string): void {
     this.userRegistrationService.addMovieToFavs(MovieID).subscribe({
       next: (result) => {
-        localStorage.setItem('user', JSON.stringify(result.user));
         this.snackBar.open('Movie added to favorites successfully', 'OK', { duration: 3000 });
+        this.getUsersFavMovies();
         console.log(this.favMovies)
+        console.log(result);
       },
       error: (error: any) => {
         console.error('Error adding movie to favorites:', error);
-        console.log(this.favMovies)
       }
     });
   }
 
-  deleteMovieFromFavs(id: string): void {
-    this.userRegistrationService.deleteMovieFromFavs(id).subscribe({
+  deleteMovieFromFavs(MovieID: string): void {
+    this.userRegistrationService.deleteMovieFromFavs(MovieID).subscribe({
       next: (result) => {
-        localStorage.setItem('user', JSON.stringify(result.user));
         this.snackBar.open('Movie deleted from favorites successfully', 'OK', { duration: 3000 });
+        this.getUsersFavMovies();
+        console.log(this.favMovies)
+        console.log(result);
       },
       error: (error: any) => {
         console.error('Error deleting movie to favorites:', error);
