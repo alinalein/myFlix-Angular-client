@@ -4,9 +4,9 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = 'https://movie-api-lina-834bc70d6952.herokuapp.com/';
+// const apiUrl = 'https://movie-api-lina-834bc70d6952.herokuapp.com/';
 
-// const apiUrl = 'http://localhost:8080/';
+const apiUrl = 'http://localhost:8080/';
 
 @Injectable({
   providedIn: 'root'
@@ -158,19 +158,14 @@ export class UserRegistrationService {
   addMovieToFavs(MovieID: string): Observable<any> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
-    return this.http.post(apiUrl + 'users/' + user.Username + '/movies/add/' + MovieID, null, {
+    return this.http.put(apiUrl + 'users/' + user.Username + '/movies/add/' + MovieID, null, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
         })
     }).pipe(
       map(this.extractResponseData),
-      catchError(this.handleError),
-      tap(() => {
-        if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-        }
-      })
+      catchError(this.handleError)
     );
   }
 

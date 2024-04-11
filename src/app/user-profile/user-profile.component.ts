@@ -8,4 +8,5 @@ import { UserRegistrationService } from '../fetch-api-data.service'
 })
 export class UserProfileComponent {
 
+  // will need to fetch the user data from local stroge and access the user.FavoriteMovies
 }
