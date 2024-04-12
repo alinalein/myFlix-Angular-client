@@ -6,7 +6,9 @@ import { UserRegistrationService } from '../fetch-api-data.service'
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
 
+  ngOnInit(): void {
+  }
   // will need to fetch the user data from local stroge and access the user.FavoriteMovies
 }

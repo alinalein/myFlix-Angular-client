@@ -1,3 +1,4 @@
+<app-navigation-bar></app-navigation-bar>
 <div style="display: flex;">
     <mat-card *ngFor="let movie of movies" style="flex: 1 1 auto; margin: 10px;">
         <mat-card-header>
@@ -20,7 +21,7 @@
                 Synopsis
             </button>
             <mat-icon class="fav-icon" (click)="toggleMovieInFavs(movie._id)">
-                {{isMovieInFavs(movie._id) ? 'favorite_border' : 'favorite'}}
+                {{isMovieInFavs(movie._id) ? 'favorite' : 'favorite_border' }}
             </mat-icon>
         </mat-card-actions>
     </mat-card>
