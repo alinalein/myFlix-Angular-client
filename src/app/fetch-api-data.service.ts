@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
@@ -53,7 +53,7 @@ export class UserRegistrationService {
 
   getUser(): Observable<any> {
     const user = JSON.parse(localStorage.getItem('user') || '{}')
-    return user;
+    return of(user);
   }
 
   updateUserDetails(updatedUser: any): Observable<any> {
@@ -164,7 +164,15 @@ export class UserRegistrationService {
           Authorization: 'Bearer ' + token,
         })
     }).pipe(
-      map(this.extractResponseData),
+      map((result) => {
+        // Update user's favorite movies in local storage
+        if (!user.FavoriteMovies.includes(MovieID)) {
+          user.FavoriteMovies.push(MovieID);
+          localStorage.setItem('user', JSON.stringify(user));
+        }
+
+        return result;
+      }),
       catchError(this.handleError)
     );
   }
@@ -178,7 +186,13 @@ export class UserRegistrationService {
           Authorization: 'Bearer ' + token,
         })
     }).pipe(
-      map(this.extractResponseData),
+      map((result) => {
+        // Remove deleted movie ID from user's favorite movies list in local storage
+        user.FavoriteMovies = user.FavoriteMovies.filter((id: string) => id !== MovieID);
+        localStorage.setItem('user', JSON.stringify(user));
+
+        return result;
+      }),
       catchError(this.handleError)
     );
   }

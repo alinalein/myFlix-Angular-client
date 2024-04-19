@@ -1,4 +1,22 @@
 .fav-icon {
     color: red;
-    size: 20px;
+    //height & width so icon will be not cut off when change size 
+    height: auto;
+    width: auto;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+span.title_nav {
+    color: black;
+}
+
+.movies_div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.movie_text {
+    justify-content: center;
 }

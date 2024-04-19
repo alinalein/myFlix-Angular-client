@@ -53,6 +53,7 @@ export class MovieCardComponent implements OnInit {
     ).subscribe((resp: any) => {
       this.favMovies = resp;
       console.log(this.favMovies);
+      return this.favMovies
     });
   }
 
