@@ -18,7 +18,8 @@ export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   favMovies: any[] = [];
 
-  constructor(public userRegistrationService: UserRegistrationService,
+  constructor(
+    public userRegistrationService: UserRegistrationService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
   ) { }
@@ -103,20 +104,33 @@ export class MovieCardComponent implements OnInit {
   }
 
   //expect name of driector of specific movie as a string argument
-  openDirectorInfo(Director: string): void {
+  openDirectorInfo(name: string, bio: string, birth: string, death: string): void {
     this.dialog.open(DirectorInfoComponent, {
-      width: '280px'
+      data: {
+        Name: name,
+        Bio: bio,
+        Birth: birth,
+        Death: death,
+      },
+      width: '280px',
     });
   }
 
-  openGenreInfo(Genre: string): void {
+  openGenreInfo(name: string, description: string): void {
     this.dialog.open(GenreInfoComponent, {
+      data: {
+        Name: name,
+        Description: description
+      },
       width: '280px'
     });
   }
 
-  openMovieSynopsis(Description: string): void {
+  openMovieSynopsis(description: string): void {
     this.dialog.open(MovieSynopsisComponent, {
+      data: {
+        Description: description
+      },
       width: '280px'
     });
   }

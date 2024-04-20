@@ -1,1 +1,14 @@
-<p>director-info works!</p>
+<mat-card style="flex: 1 1; margin: 10px;">
+    <mat-card-header>
+        <mat-card-actions>
+            <button mat-button color="primary" (click)="closeDirector()">
+                x
+            </button>
+        </mat-card-actions>
+        <mat-card-title class="movie_text">{{data.Name}}</mat-card-title>
+        <mat-card-subtitle class="movie_text"><b>Biography:</b> {{data.Bio}}</mat-card-subtitle>
+        <mat-card-subtitle class="movie_text"><b>Birth: </b>{{data.Birth}}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="data.Death" class="movie_text"><b>Death: </b>{{data.Death}}</mat-card-subtitle>
+    </mat-card-header>
+
+</mat-card>

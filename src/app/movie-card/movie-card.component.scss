@@ -14,9 +14,14 @@ span.title_nav {
 .movies_div {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .movie_text {
     justify-content: center;
+}
+
+mat-card-header {
+    height: 22%;
+    width: 240px;
 }

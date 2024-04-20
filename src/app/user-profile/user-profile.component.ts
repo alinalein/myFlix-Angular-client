@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 // You'll use this import to close the dialog on success
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
