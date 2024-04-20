@@ -1,15 +1,14 @@
 <!-- Navbar component -->
 <app-navigation-bar></app-navigation-bar>
 <!-- Movie-Card component -->
-<div style="display: flex;" class="movies_div">
-    <mat-card *ngFor="let movie of movies">
+<div class="movies_div">
+    <mat-card *ngFor="let movie of movies" class="movie_card">
         <mat-card-header>
             <mat-card-subtitle class="movie_text">Directed by: {{movie.Director.Name}}</mat-card-subtitle>
             <mat-card-title class="movie_text">{{movie.Title}}</mat-card-title>
         </mat-card-header>
-        <img mat-card-image src={{movie.ImagePath}} alt={{movie.Title}}
-            style="width: 240px; height: 350px; margin: auto;" />
-        <mat-card-actions>
+        <img mat-card-image class="card_img" src={{movie.ImagePath}} alt={{movie.Title}} />
+        <mat-card-actions class="movie_buttons">
             <button mat-button color="primary" (click)="openGenreInfo(movie.Genre.Name, movie.Genre.Description )">
                 Genre
             </button>
@@ -17,9 +16,6 @@
                 (click)="openDirectorInfo(movie.Director.Name, movie.Director.Bio , movie.Director.Birth , movie.Director.Death)">
                 Director
             </button>
-            <!-- <button mat-button color="primary" (click)="openDirectorInfo(movie.Director)">
-                Actors
-            </button> -->
             <button mat-button color="primary" (click)="openMovieSynopsis(movie.Description)">
                 Synopsis
             </button>
@@ -27,9 +23,5 @@
                 {{isMovieInFavs(movie._id) ? 'favorite' : 'favorite_border' }}
             </mat-icon>
         </mat-card-actions>
-        <!-- <mat-card-footer>
-            <mat-card-title class="movie_text">{{movie.Title}}</mat-card-title>
-            <mat-card-subtitle class="movie_text">Directed by: {{movie.Director.Name}}</mat-card-subtitle>
-        </mat-card-footer> -->
     </mat-card>
 </div>

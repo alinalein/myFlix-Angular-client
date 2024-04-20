@@ -1,22 +1,24 @@
 <!-- Navbar component -->
 <app-navigation-bar></app-navigation-bar>
-
-<div style="display: flex;" class="profile_div ">
-    <mat-card>
-        <mat-card-title>Profile Details</mat-card-title>
+<!-- why divs move  !!!!!!!!!!!! -->
+<div class="profile_div profile">
+    <mat-card class="profile_left">
+        <mat-card-header>
+            <h1>Profile User</h1>
+        </mat-card-header>
         <mat-card-content>
-            <mat-icon>account_box</mat-icon>
+            <mat-icon class="profile_icon">account_box</mat-icon>
             <mat-card-subtitle>Username: <b>{{user.Username}}</b></mat-card-subtitle>
             <mat-card-subtitle>E-Mail: <b>{{user.Email}}</b></mat-card-subtitle>
             <mat-card-subtitle>Birtday: <b>{{user.Birthday | date:'longDate' }}</b></mat-card-subtitle>
         </mat-card-content>
     </mat-card>
-    <mat-card>
+    <mat-card class="profile_right">
         <mat-card-header>
-            <mat-card-title>Update Profile Details</mat-card-title>
+            <h1>Update Details</h1>
         </mat-card-header>
-        <mat-card-content class="update_fields">
-            <form>
+        <mat-card-content>
+            <form class="update_form">
                 <mat-form-field>
                     <input matInput [(ngModel)]="updatedUser.Username" placeholder="Username" type="text"
                         name="Username" required>
@@ -33,24 +35,24 @@
                 </mat-form-field>
             </form>
         </mat-card-content>
-        <mat-card-actions class="update_fields">
-            <button mat-raised-button (click)="updateUserData()" color="primary">
+        <mat-card-actions>
+            <button class="update_button" mat-raised-button (click)="updateUserData()" color="primary">
                 Update Profile
             </button>
-            <button mat-raised-button (click)="deleteUser()" color="primary">
+            <button class="update_button" mat-raised-button (click)="deleteUser()" color="primary">
                 Delete Profile
             </button>
         </mat-card-actions>
     </mat-card>
 </div>
-<div style="display: flex;" class="profile_div ">
-    <mat-card *ngFor="let movie of favMovies" style="margin: 10px;">
-        <mat-card-header class="profile_fav_movies">
+<h1 class="profile_div">Your Favorite Movies</h1>
+<div class="profile_div">
+    <mat-card *ngFor="let movie of favMovies" class="movie_card">
+        <mat-card-header class="profile_fav_header">
             <mat-card-title class="movie_text">{{movie.Title}}</mat-card-title>
             <mat-card-subtitle class="movie_text"><b>Directed by: </b>{{movie.Director.Name}}</mat-card-subtitle>
             <mat-card-subtitle class="movie_text"><b>Actors: </b>{{movie.Actors.join(', ')}}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="{{movie.ImagePath}}" alt="{{movie.Title}}"
-            style="width: 240px; height: 350px; margin: auto;" />
+        <img mat-card-image src="{{movie.ImagePath}}" alt="{{movie.Title}}" class="card_img" />
     </mat-card>
 </div>

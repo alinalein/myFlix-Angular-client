@@ -1,11 +1,24 @@
 .icon {
     cursor: pointer;
     padding: 0 15px;
-    font-size: 35px;
+    font-size: 33px;
     height: auto;
-    color: black;
+    color: white;
 }
 
 .spacer {
-    flex: 1 1 auto;
+    flex: 1 auto;
+}
+
+.nav {
+    background-color: black;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    height: auto;
+}
+
+.nav_title {
+    color: white;
+    font-size: 35px;
 }
