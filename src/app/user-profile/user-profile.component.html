@@ -1,16 +1,22 @@
 <!-- Navbar component -->
 <app-navigation-bar></app-navigation-bar>
-<!-- why divs move  !!!!!!!!!!!! -->
 <div class="profile_div profile">
     <mat-card class="profile_left">
         <mat-card-header>
             <h1>Profile User</h1>
         </mat-card-header>
-        <mat-card-content>
-            <mat-icon class="profile_icon">account_box</mat-icon>
-            <mat-card-subtitle>Username: <b>{{user.Username}}</b></mat-card-subtitle>
-            <mat-card-subtitle>E-Mail: <b>{{user.Email}}</b></mat-card-subtitle>
-            <mat-card-subtitle>Birtday: <b>{{user.Birthday | date:'longDate' }}</b></mat-card-subtitle>
+        <mat-icon class="profile_icon">account_box</mat-icon>
+        <mat-card-content style="display: flex;">
+            <div style="margin-right: 5px;">
+                <mat-card-subtitle>Username: </mat-card-subtitle>
+                <mat-card-subtitle>E-Mail: </mat-card-subtitle>
+                <mat-card-subtitle>Birtday: </mat-card-subtitle>
+            </div>
+            <div>
+                <mat-card-subtitle><b>{{user.Username}}</b></mat-card-subtitle>
+                <mat-card-subtitle><b>{{user.Email}}</b></mat-card-subtitle>
+                <mat-card-subtitle><b>{{user.Birthday | date:'longDate' }}</b></mat-card-subtitle>
+            </div>
         </mat-card-content>
     </mat-card>
     <mat-card class="profile_right">
@@ -24,10 +30,12 @@
                         name="Username" required>
                     <mat-hint align="start">Required field</mat-hint>
                 </mat-form-field>
+                <div style="margin-bottom: 10px;"></div>
                 <mat-form-field>
                     <input matInput [(ngModel)]="updatedUser.Email" type="email" placeholder="Email" name="Email">
                     <mat-hint align="start">Opional field</mat-hint>
                 </mat-form-field>
+                <div style="margin-bottom: 10px;"></div>
                 <mat-form-field>
                     <input matInput [(ngModel)]="updatedUser.Birthday" type="date" placeholder="Birthday"
                         name="Birthday">

@@ -1,0 +1,22 @@
+.register_card {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-input {
+    width: 100%;
+}
+
+.register_button {
+    margin-bottom: 15px;
+    width: 15vw;
+    min-width: 100px;
+    font-size: medium;
+}
+
+mat-card-header {
+    padding: 0;
+}

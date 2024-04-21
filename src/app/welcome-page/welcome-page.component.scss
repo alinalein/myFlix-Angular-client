@@ -1,0 +1,24 @@
+.main-page {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.welcome_button {
+    width: 30%;
+    min-width: 300px;
+    font-size: x-large;
+    height: 50px;
+}
+
+.welcome_title {
+    padding: 0 20px;
+    font-size: 9vh;
+    text-align: center;
+}
+
+.login_button {
+    margin-top: 1.3%;
+}

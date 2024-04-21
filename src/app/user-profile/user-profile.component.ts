@@ -69,6 +69,7 @@ export class UserProfileComponent implements OnInit {
         this.snackBar.open('Your profile has been updated', 'OK', {
           duration: 3000
         });
+        this.updatedUser = { Username: '', Email: '', Birthday: '' }
         // window.location.reload();-> the window jumps
       },
       error: (error) => {

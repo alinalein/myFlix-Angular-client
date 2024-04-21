@@ -112,7 +112,7 @@ export class MovieCardComponent implements OnInit {
         Birth: birth,
         Death: death,
       },
-      width: '280px',
+      width: '350px',
     });
   }
 
@@ -122,7 +122,7 @@ export class MovieCardComponent implements OnInit {
         Name: name,
         Description: description
       },
-      width: '280px'
+      width: '350px'
     });
   }
 
@@ -131,7 +131,7 @@ export class MovieCardComponent implements OnInit {
       data: {
         Description: description
       },
-      width: '280px'
+      width: '350px'
     });
   }
 }

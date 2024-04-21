@@ -1,0 +1,17 @@
+mat-card {
+    display: flex;
+    padding: 20px;
+}
+
+mat-card-header {
+    justify-content: space-between;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.close_button {
+    border-color: transparent;
+    border-radius: 5px;
+    background-color: rgba(155, 150, 150, 0.2);
+    cursor: pointer;
+}
