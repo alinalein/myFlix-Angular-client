@@ -4,8 +4,8 @@
 <div class="movies_div">
     <mat-card *ngFor="let movie of movies" class="movie_card">
         <mat-card-header>
-            <mat-card-subtitle class="movie_text">Directed by: {{movie.Director.Name}}</mat-card-subtitle>
-            <mat-card-title class="movie_text">{{movie.Title}}</mat-card-title>
+            <mat-card-subtitle class="movie_directed">Directed by: {{movie.Director.Name}}</mat-card-subtitle>
+            <mat-card-title>{{movie.Title}}</mat-card-title>
         </mat-card-header>
         <img mat-card-image class="card_img" src={{movie.ImagePath}} alt={{movie.Title}} />
         <mat-card-actions class="movie_buttons">

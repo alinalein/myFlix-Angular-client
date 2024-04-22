@@ -1,5 +1,6 @@
 <!-- Navbar component -->
 <app-navigation-bar></app-navigation-bar>
+<!-- Profile component -->
 <div class="profile_div profile">
     <mat-card class="profile_left">
         <mat-card-header>
@@ -57,7 +58,7 @@
 <div class="profile_div">
     <mat-card *ngFor="let movie of favMovies" class="movie_card">
         <mat-card-header class="profile_fav_header">
-            <mat-card-title class="movie_text">{{movie.Title}}</mat-card-title>
+            <mat-card-title>{{movie.Title}}</mat-card-title>
             <mat-card-subtitle class="movie_text"><b>Directed by: </b>{{movie.Director.Name}}</mat-card-subtitle>
             <mat-card-subtitle class="movie_text"><b>Actors: </b>{{movie.Actors.join(', ')}}</mat-card-subtitle>
         </mat-card-header>

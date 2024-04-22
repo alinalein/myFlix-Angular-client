@@ -1,6 +1,8 @@
 mat-card {
     display: flex;
     padding: 20px;
+    background-color: #707070;
+
 }
 
 mat-card-header {
@@ -10,8 +12,12 @@ mat-card-header {
 }
 
 .close_button {
-    border-color: transparent;
     border-radius: 5px;
-    background-color: rgba(155, 150, 150, 0.2);
+    background-color: transparent;
+    color: white;
     cursor: pointer;
+}
+
+mat-card-subtitle {
+    color: black;
 }
