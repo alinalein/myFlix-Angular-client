@@ -1,7 +1,6 @@
 # MyFlixAngularClient
 This is the Angular frontend for the movie_api backend project, it was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
 
-
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
@@ -22,6 +21,8 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+## Preview
+<img width="940" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/d5e7d878-6501-454e-acd8-5d7ed6ce3795">
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Link to live App
+ https://alinalein.github.io/myFlix-Angular-client/
