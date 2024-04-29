@@ -1,27 +1,52 @@
 # MyFlixAngularClient
 This is the Angular frontend for the movie_api backend project, it was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
+The app will feature multiple interface views to interact with data via the REST API endpoints defined in the movie_api server-side app
 
+## The backend used for this project
+[movie_api](https://github.com/alinalein/movie_api)
 
-## Development server
+## Technology Stack 
+- **Angular:** Front-end framework for building dynamic web applications with TypeScript
+- **Angular Material:** UI component library for Angular, providing ready-to-use components following Material Design principles
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Getting started
 
-## Code scaffolding
+### Clone the repository
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+git clone https://github.com/alinalein/myFlix-Angular-client.git
+```
 
-## Build
+### Change the directory
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+cd myFlix-Angular-client
+```
 
-## Running unit tests
+### Install the dependencies
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+npm install
+```
 
-## Running end-to-end tests
+### Run the app
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+ng serve
+```
 
-## Further help
+## User stories
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+As a user, I want to be able to create a profile and log in, so that I can view information about movies.
+
+As a user, I want to be able to update my profile information, including my username, email, and date of birth, so that I can maintain accurate and up-to-date details for my account.
+
+As a user, I want to be able to receive information on the director, genre, and description so that I can learn more about a specific movie I am interested in.
+
+As a user, I want to be able to remove/add a movie from/to my list of favorites, so that I can manage my collection based on my preferences.
+
+## Preview
+<img width="940" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/d5e7d878-6501-454e-acd8-5d7ed6ce3795">
+
+## Link to live App
+ https://alinalein.github.io/myFlix-Angular-client/
