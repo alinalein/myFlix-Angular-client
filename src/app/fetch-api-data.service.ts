@@ -15,6 +15,7 @@ const apiUrl = 'https://movie-api-lina-834bc70d6952.herokuapp.com/';
 export class UserRegistrationService {
 
   /**
+   * Constructor for the UserRegistrationService class.
    * @constructor
    * @param {HttpClient} http - To make HTTP requests.
    */
@@ -203,7 +204,7 @@ export class UserRegistrationService {
     }).pipe(
       map(this.extractResponseData),
       catchError(this.handleError),
-      // Filter out and return only the favorite movies from the response data
+      // filter out and return only the favorite movies from the response data
       map((data: any) => {
         if (data && data.FavoriteMovies) {
           return data.FavoriteMovies;
@@ -229,7 +230,7 @@ export class UserRegistrationService {
         })
     }).pipe(
       map((result) => {
-        // Update user's favorite movies in local storage
+        // update user's favorite movies in local storage
         if (!user.FavoriteMovies.includes(MovieID)) {
           user.FavoriteMovies.push(MovieID);
           localStorage.setItem('user', JSON.stringify(user));
@@ -242,7 +243,7 @@ export class UserRegistrationService {
   }
 
   /**
-   * Deletes a movie from the users favorite movies by by making a DELETE request to the corresponding endpoint.
+   * Deletes a movie from the users favorite movies by making a DELETE request to the corresponding endpoint.
    * @param {String} MovieID - ID of the movie to be removed from favorites-
    * @returns {Observable<any>} Observable that emits the API response.
    */
@@ -256,7 +257,7 @@ export class UserRegistrationService {
         })
     }).pipe(
       map((result) => {
-        // Remove deleted movie ID from user's favorite movies list in local storage
+        // remove deleted movie ID from user's favorite movies list in local storage
         user.FavoriteMovies = user.FavoriteMovies.filter((id: string) => id !== MovieID);
         localStorage.setItem('user', JSON.stringify(user));
 

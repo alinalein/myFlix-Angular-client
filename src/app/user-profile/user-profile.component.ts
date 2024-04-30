@@ -2,11 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserRegistrationService } from '../fetch-api-data.service'
 
 import { Router } from '@angular/router';
-// This import is used to display notifications back to the user
+// this import is used to display notifications back to the user
 import { MatSnackBar } from '@angular/material/snack-bar';
-// You'll use this import to close the dialog on success
+// you'll use this import to close the dialog on success
 import { MatDialog } from '@angular/material/dialog';
 
+/**
+ * @component - Component for displaying user details and action of the details.
+ */
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -18,7 +21,13 @@ export class UserProfileComponent implements OnInit {
   favMovies: any[] = []
   user: any = {};
 
-
+  /**
+   * @constructor
+   * @param {UserRegistrationService} userRegistrationService - Service for API calls. 
+   * @param {Router} router - Angular service for navigation.
+   * @param {MatDialog} dialog - Material MatDialog to close dialogs.
+   * @param {MatSnackBar} snackBar - Material MatSnackBar to open a dialog.
+   */
   constructor(
     public userRegistrationService: UserRegistrationService,
     public router: Router,
@@ -26,40 +35,58 @@ export class UserProfileComponent implements OnInit {
     public snackBar: MatSnackBar
   ) { }
 
-  // will need to fetch the user data from local stroge and access the user.FavoriteMovies
+  /**
+   * Lifecycle hook called after the component was initialized.
+   * It will invoke the function getFavoriteMovies and getUserData.
+   */
+  // will need to fetch the user data from localStorage and access the user.FavoriteMovies
   ngOnInit(): void {
     this.getFavoriteMovies();
     this.getUserData()
   }
 
+  /**
+   * Fetches the users favorite movies from database.
+   * If successful, will add the favorite movies of the user to the favMovies array.
+   * If unsuccessful, will show an error message in the console.
+   */
   getFavoriteMovies(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    // Fetch user's favorite movie IDs and all movies simultaneously
+    // fetch user's favorite movie IDs and all movies simultaneously
     this.userRegistrationService.getAllMovies().subscribe((resp: any[]) => {
-      // Filter movies based on favorite movie IDs
+      // filter movies based on favorite movie IDs
       this.favMovies = resp.filter((movie) => user.FavoriteMovies.includes(movie._id));
       console.log('Favorite Movies:', this.favMovies);
     },
       (error: any) => {
         console.error('Error fetching favorite movies:', error);
-        // Handle error if needed
+        // handle error if needed
       }
     );
   }
 
-
-
+  /**
+   * Fetches user details from database.
+   * If successful, will add the user details to the user object.
+   * If unsuccessful, will show an error message in the console.
+   */
   getUserData(): void {
     this.userRegistrationService.getUser().subscribe(
       (resp: {}) => {
         this.user = resp;
         console.log('user: ', this.user)
-      }),
+      },
       (error: any) => {
         console.error('Error fetching user data:', error);
       }
+    )
   }
 
+  /**
+   * Updates the user details in the database.
+   * If successful, will display a success message and set the user object to the updatedUser object, then clear the updatedUser object again.
+   * If unsuccessful, will display an error message in the browser and show an error message in the console. 
+   */
   updateUserData(): void {
     this.userRegistrationService.updateUserDetails(this.updatedUser).subscribe({
       next: (resp: any) => {
@@ -81,6 +108,12 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Deletes user from the database.
+   * @returns - If user will not confirm to delete the profile.
+   * If confirmed and successful, will display a success message, clear the local storage and navigate to the welcome page.
+   * If unsuccessful, will display an error message in the browser and show an error message in the console. 
+   */
   deleteUser(): void {
     const confirmDelete = confirm('Are you sure you want to delete your account?');
     if (!confirmDelete) {
@@ -90,7 +123,7 @@ export class UserProfileComponent implements OnInit {
     this.userRegistrationService.deleteUser().subscribe({
       next: (result) => {
         localStorage.clear();
-        // Logic for a successful user registration goes here! (To be implemented)
+        // logic for a successful user registration goes here
         this.dialog.closeAll()
         this.router.navigate(['welcome']);
         console.log(result);

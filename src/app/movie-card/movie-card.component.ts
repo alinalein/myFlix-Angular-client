@@ -8,6 +8,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
+/**
+ * @component - Component for displaying movies and actions to those movies.
+ */
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
@@ -18,22 +21,36 @@ export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   favMovies: any[] = [];
 
+  /**
+   * @constructor
+   * @param {UserRegistrationService} userRegistrationService - Service for API calls. 
+   * @param {MatDialog} dialog - Material MatDialog to close dialogs.
+   * @param {MatSnackBar} snackBar - Material MatSnackBar to open a dialog.
+   */
   constructor(
     public userRegistrationService: UserRegistrationService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
   ) { }
 
-  //call those functions when component mounted
+  /**
+   * Lifecycle hook called after the component was initialized.
+   * It will invoke the function getMovies and getUsersFavMovies.
+   */
   ngOnInit(): void {
     this.getMovies();
     this.getUsersFavMovies();
   }
 
+  /**
+   * Fetches all movies from the database. 
+   * If successful, updates the movies array with the response from the endpoint.
+   * If unsuccessful, will show an error message in the console and return an empty array.
+   */
   getMovies(): void {
     this.userRegistrationService.getAllMovies().pipe(
       catchError(error => {
-        console.error('Error fetching favorite movies:', error);
+        console.error('Error fetching movies:', error);
         return of([]);
       })
     ).subscribe(
@@ -44,6 +61,12 @@ export class MovieCardComponent implements OnInit {
     );
   }
 
+  /**
+   * Fetches the user favorite movies from the database. 
+   * If successful, updates the favMovies array with the response from the endpoint.
+   * If unsuccessful, will show an error message in the console and return an empty array.
+   * @returns {any[]} - The array of favorite movies.
+   */
   getUsersFavMovies(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     this.userRegistrationService.getFavMovies(user.Username).pipe(
@@ -58,10 +81,21 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Checks is the requested movie is the user favorite list.
+   * @param {String} movieId - ID of the requested movie.
+   * @returns {boolean} - True if the movie is in the favorite list, false otherwise.
+   */
   isMovieInFavs(movieId: string): boolean {
     return this.favMovies.includes(movieId);
   }
 
+  /**
+   * Toggles the requested movie between being in the user's favorite list and not.
+   * If yes, calls the deleteMovieFromFavs function.
+   * If no, calls the addMovieToFavs function.
+   * @param {String} movieId - ID of the requested movie.
+   */
   toggleMovieInFavs(movieId: string): void {
     const movieInFavs = this.isMovieInFavs(movieId);
     if (movieInFavs) {
@@ -75,13 +109,19 @@ export class MovieCardComponent implements OnInit {
     }
   }
 
+  /**
+  * Adds requested movie to the users favorite list.
+  * If successful, it will display a success message and call the getUsersFavMovies function.
+  * If unsuccessful, will show an error message in the console.
+  * @param {String} MovieID - ID of the movie to be added to favorites.
+  */
   addMovieToFavs(MovieID: string): void {
     this.userRegistrationService.addMovieToFavs(MovieID).subscribe({
       next: (result) => {
         this.snackBar.open('Movie added to favorites successfully', 'OK', { duration: 3000 });
         this.getUsersFavMovies();
-        console.log(this.favMovies)
-        console.log(result);
+        // console.log(this.favMovies)
+        // console.log(result);
       },
       error: (error: any) => {
         console.error('Error adding movie to favorites:', error);
@@ -89,13 +129,19 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Deletes the requested movie from the user's favorite list.
+   * If successful, it will display a success message and call the getUsersFavMovies function.
+   * If unsuccessful, it will show an error message in the console.
+   * @param {String} MovieID - ID of the movie to be deleted from favorites.
+   */
   deleteMovieFromFavs(MovieID: string): void {
     this.userRegistrationService.deleteMovieFromFavs(MovieID).subscribe({
       next: (result) => {
         this.snackBar.open('Movie deleted from favorites successfully', 'OK', { duration: 3000 });
         this.getUsersFavMovies();
-        console.log(this.favMovies)
-        console.log(result);
+        // console.log(this.favMovies)
+        // console.log(result);
       },
       error: (error: any) => {
         console.error('Error deleting movie to favorites:', error);
@@ -103,7 +149,14 @@ export class MovieCardComponent implements OnInit {
     })
   }
 
-  //expect name of driector of specific movie as a string argument
+  /**
+   * Opens director info dialog.
+   * @param {String} name - Name of the director.
+   * @param {String} bio - Bio of the director.
+   * @param {String} birth - Birth of the director.
+   * @param {String} death - Death of the director.
+   */
+  // expect name of director of specific movie as a string argument
   openDirectorInfo(name: string, bio: string, birth: string, death: string): void {
     this.dialog.open(DirectorInfoComponent, {
       data: {
@@ -116,6 +169,11 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens gerne info dialog.
+   * @param {String} name - Name of the gerne.
+   * @param {String} description - Description of the gerne.
+   */
   openGenreInfo(name: string, description: string): void {
     this.dialog.open(GenreInfoComponent, {
       data: {
@@ -126,6 +184,10 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens movie synopsis dialog.
+   * @param {String} description - Description of the movie.
+   */
   openMovieSynopsis(description: string): void {
     this.dialog.open(MovieSynopsisComponent, {
       data: {
