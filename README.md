@@ -1,4 +1,4 @@
-# MyFlixAngularClient
+## MyFlixAngularClient
 This is the Angular frontend for the movie_api backend project, it was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
 The app will feature multiple interface views to interact with data via the REST API endpoints defined in the movie_api server-side app
 
