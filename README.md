@@ -1,16 +1,15 @@
 ## MyFlixAngularClient
-This is the Angular frontend for the movie_api backend project, it was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
-The app will feature multiple interface views to interact with data via the REST API endpoints defined in the movie_api server-side app
+This is the Angular frontend for the Movie_API backend project; it was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
+The app will feature multiple interface views to interact with data via the REST API endpoints defined in the Movie_API server-side app.
 
 ## The backend used for this project
-[movie_api](https://github.com/alinalein/movie_api)
+[Movie_API](https://github.com/alinalein/movie_api)
 
 ## Technology Stack 
-- **Angular:** Front-end framework for building dynamic web applications with TypeScript
-- **Angular Material:** UI component library for Angular, providing ready-to-use components following Material Design principles
-
+- **Angular :** Front-end framework for building dynamic web applications with TypeScript.
+- **Angular Material :** UI component library for Angular, providing ready-to-use components following Material Design principles.
+  
 ## Getting started
-
 ### Clone the repository
 
 ```
@@ -36,17 +35,16 @@ ng serve
 ```
 
 ## User stories
-
 As a user, I want to be able to create a profile and log in, so that I can view information about movies.
 
 As a user, I want to be able to update my profile information, including my username, email, and date of birth, so that I can maintain accurate and up-to-date details for my account.
 
-As a user, I want to be able to receive information on the director, genre, and description so that I can learn more about a specific movie I am interested in.
+As a user, I want to be able to receive information on the director, genre, and description, so that I can learn more about a specific movie I am interested in.
 
-As a user, I want to be able to remove/add a movie from/to my list of favorites, so that I can manage my collection based on my preferences.
+As a user, I want to be able to remove a movie from or add a movie to my list of favorites, so that I can manage my collection based on my preferences.
 
 ## Preview
-<img width="940" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/d5e7d878-6501-454e-acd8-5d7ed6ce3795">
+<img width="955" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/f9435643-0473-4fec-bdf8-572fbbc7cd3c">
 
 ## Link to live App
  https://alinalein.github.io/myFlix-Angular-client/
