@@ -8,7 +8,7 @@ The app will feature multiple interface views to interact with data via the REST
 ## Technology Stack 
 - **Angular :** Front-end framework for building dynamic web applications with TypeScript.
 - **Angular Material :** UI component library for Angular, providing ready-to-use components following Material Design principles.
-  
+
 ## Getting started
 ### Clone the repository
 
@@ -34,6 +34,9 @@ npm install
 ng serve
 ```
 
+## Documentation in the 'docs' folder
+**Typedoc:** Documentation generator for TypeScript projects, creating API documentation from TypeScript source code comments.
+
 ## User stories
 As a user, I want to be able to create a profile and log in, so that I can view information about movies.
 
@@ -44,7 +47,7 @@ As a user, I want to be able to receive information on the director, genre, and 
 As a user, I want to be able to remove a movie from or add a movie to my list of favorites, so that I can manage my collection based on my preferences.
 
 ## Preview
-<img width="955" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/f9435643-0473-4fec-bdf8-572fbbc7cd3c">
+<img width="944" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/cb0207b7-5130-4cb7-9718-9140db8c22d7">
 
 ## Link to live App
  https://alinalein.github.io/myFlix-Angular-client/
