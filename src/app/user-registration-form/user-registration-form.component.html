@@ -3,7 +3,7 @@
         <h2>Sign Up</h2>
     </mat-card-header>
     <mat-card-content>
-        <form>
+        <form (keydown.enter)="registerUser()">
             <mat-form-field class="form-input">
                 <input matInput [(ngModel)]="userData.Username" placeholder="Username" type="text" name="Username"
                     required>

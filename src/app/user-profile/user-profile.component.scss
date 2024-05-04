@@ -29,6 +29,7 @@
     width: auto;
     font-size: 200px;
     margin-bottom: 20px;
+    color: #212121;
 }
 
 .update_form {
@@ -43,14 +44,22 @@
 }
 
 .card_img {
-    width: 300px;
-    height: 430px;
+    height: 455px;
+    max-width: 100%;
     margin: auto;
+    overflow: visible;
+    display: flex;
+    transition: transform 0.5s linear;
+}
+
+.card_img:hover {
+    transform: scale(1.1);
+    border-radius: 5px;
 }
 
 .movie_card {
     margin: 15px;
-    width: 300px;
+    width: 280px;
     background-color: black;
 }
 
@@ -60,4 +69,29 @@
 
 .update_button {
     margin: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.update_button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #B71C1C, white, white, #B71C1C, );
+    animation: slide 2s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0.2;
+    }
+
+    100% {
+        transform: translateX(100%);
+        opacity: 0.7;
+    }
 }

@@ -10,15 +10,66 @@
     flex: 1 auto;
 }
 
+.nav_title {
+    color: white;
+    font-size: 35px;
+}
+
 .nav {
     background-color: black;
     position: fixed;
     top: 0;
     z-index: 1000;
     height: auto;
+    overflow: hidden;
 }
 
-.nav_title {
-    color: white;
-    font-size: 35px;
+.nav::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(to right, black, red, white, white, red, black);
+    animation: slide 4s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: translateX(0%);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateX(100%);
+        opacity: 0.4;
+    }
+}
+
+span {
+    animation: glow 4s ease-in-out infinite;
+}
+
+@keyframes glow {
+
+    0%,
+    100% {
+        text-shadow: -5px -5px 5px rgba(0, 0, 0, 0.2),
+            5px -5px 5px rgba(0, 0, 0, 0.2),
+            -5px 5px 5px rgba(0, 0, 0, 0.2),
+            5px 5px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    50% {
+        text-shadow: -5px -5px 5px rgba(255, 0, 0, 0.6),
+            5px -5px 5px rgba(255, 0, 0, 0.6),
+            -5px 5px 5px rgba(255, 0, 0, 0.6),
+            5px 5px 5px rgba(255, 0, 0, 0.6);
+    }
 }
