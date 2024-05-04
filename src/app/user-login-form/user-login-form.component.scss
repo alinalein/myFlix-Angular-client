@@ -5,18 +5,21 @@ mat-card {
     max-width: 400px;
     width: 100%;
     background-color: #707070;
-}
 
-mat-card-header {
-    padding: 0;
-}
+    mat-card-header {
+        padding: 0;
+    }
 
-.form-input {
-    width: 100%;
-}
+    .form-input {
+        width: 100%;
+    }
 
-.login_button {
-    margin-bottom: 15px;
-    width: 15vw;
-    font-size: medium;
+    mat-card-actions {
+
+        .login_button {
+            margin-bottom: 15px;
+            width: 15vw;
+            font-size: medium;
+        }
+    }
 }

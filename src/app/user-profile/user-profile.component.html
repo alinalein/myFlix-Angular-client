@@ -1,7 +1,7 @@
 <!-- Navbar component -->
 <app-navigation-bar></app-navigation-bar>
 <!-- Profile component -->
-<div class="profile_div profile">
+<div class="user_profile_div profile">
     <mat-card class="profile_left">
         <mat-card-header>
             <h1>Profile User</h1>
@@ -54,8 +54,8 @@
         </mat-card-actions>
     </mat-card>
 </div>
-<h1 class="profile_div">Your Favorite Movies</h1>
-<div class="profile_div">
+<h1 class="user_profile_div">Your Favorite Movies</h1>
+<div class="user_profile_div">
     <mat-card *ngFor="let movie of favMovies" class="movie_card">
         <mat-card-header class="profile_fav_header">
             <mat-card-title>{{movie.Title}}</mat-card-title>

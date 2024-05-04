@@ -37,16 +37,13 @@ $myFlix-Angular-client-theme: mat.define-light-theme((color: (primary: $myFlix-A
 html,
 body {
   height: 100%;
-  background-color: #731010;
-  color: white;
-}
-
-h2,
-h1 {
-  color: white;
-}
-
-body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #731010;
+  color: white;
+
+  h1,
+  h2 {
+    color: white;
+  }
 }

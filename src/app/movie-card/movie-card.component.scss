@@ -1,21 +1,3 @@
-.fav-icon {
-    /* Set initial properties */
-    height: auto;
-    width: auto;
-    font-size: 30px;
-    cursor: pointer;
-    transition: transform 0.2s linear;
-    z-index: 999;
-}
-
-.fav-icon:hover {
-    transform: scale(1.3);
-}
-
-.movie_directed {
-    color: #707070;
-}
-
 .movies_div {
     margin-top: 60px;
     margin-left: 3.5%;
@@ -23,34 +5,47 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-}
 
-mat-card-header {
-    height: 15%;
-    width: 250px;
-}
+    .movie_card {
+        margin: 15px;
+        width: 280px;
+        background-color: black;
 
-.card_img {
-    height: 455px;
-    max-width: 100%;
-    margin: auto;
-    overflow: visible;
-    display: flex;
-    transition: transform 0.5s linear;
-}
+        mat-card-header {
+            height: 15%;
+            width: 250px;
 
-.card_img:hover {
-    transform: scale(1.1);
-    border-radius: 5px;
-}
+            .movie_directed {
+                color: #707070;
+            }
+        }
 
+        .card_img {
+            height: 455px;
+            max-width: 100%;
+            margin: auto;
+            overflow: visible;
+            display: flex;
+            transition: transform 0.5s linear;
 
-.movie_card {
-    margin: 15px;
-    width: 280px;
-    background-color: black;
-}
+            &:hover {
+                transform: scale(1.1);
+                border-radius: 5px;
+            }
+        }
 
-.movie_buttons {
-    justify-content: center;
+        mat-card-actions .fav-icon {
+            /* Set initial properties */
+            height: auto;
+            width: auto;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.2s linear;
+            z-index: 999;
+
+            &:hover {
+                transform: scale(1.3);
+            }
+        }
+    }
 }

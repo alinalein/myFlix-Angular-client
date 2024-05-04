@@ -1,87 +1,88 @@
-.profile {
-    margin-top: 63px;
-    margin-bottom: 60px;
-}
-
-.profile_div {
+.user_profile_div {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+
 }
 
-.profile_left {
-    width: 20%;
-    min-width: 340px;
-    margin: 1%;
-    align-items: center;
-    background-color: #707070;
-}
+.profile {
+    margin-top: 63px;
+    margin-bottom: 60px;
 
-.profile_right {
-    width: 50%;
-    min-width: 340px;
-    margin: 1%;
-    background-color: #707070;
-}
+    .profile_left {
+        width: 20%;
+        min-width: 340px;
+        margin: 1%;
+        align-items: center;
+        background-color: #707070;
 
-.profile_icon {
-    height: auto;
-    width: auto;
-    font-size: 200px;
-    margin-bottom: 20px;
-    color: #212121;
-}
+        .profile_icon {
+            height: auto;
+            width: auto;
+            font-size: 200px;
+            margin-bottom: 20px;
+            color: #212121;
+        }
+    }
 
-.update_form {
-    margin-bottom: 5px;
-    display: flex;
-    flex-direction: column;
-}
+    .profile_right {
+        width: 50%;
+        min-width: 340px;
+        margin: 1%;
+        background-color: #707070;
 
-.profile_fav_header {
-    height: 20%;
-    width: 240px;
-}
+        .update_form {
+            margin-bottom: 5px;
+            display: flex;
+            flex-direction: column;
+        }
 
-.card_img {
-    height: 455px;
-    max-width: 100%;
-    margin: auto;
-    overflow: visible;
-    display: flex;
-    transition: transform 0.5s linear;
-}
+        .update_button {
+            margin: 5px;
+            position: relative;
+            overflow: hidden;
 
-.card_img:hover {
-    transform: scale(1.1);
-    border-radius: 5px;
+            &::before {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 4px;
+                width: 100%;
+                background: linear-gradient(90deg, #B71C1C, white, white, #B71C1C, );
+                animation: slide 2s linear infinite;
+            }
+        }
+    }
 }
 
 .movie_card {
     margin: 15px;
     width: 280px;
     background-color: black;
-}
 
-.movie_text {
-    color: #707070;
-}
+    .profile_fav_header {
+        height: 20%;
+        width: 240px;
 
-.update_button {
-    margin: 5px;
-    position: relative;
-    overflow: hidden;
-}
+        .movie_text {
+            color: #707070;
+        }
+    }
 
-.update_button::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 4px;
-    width: 100%;
-    background: linear-gradient(90deg, #B71C1C, white, white, #B71C1C, );
-    animation: slide 2s linear infinite;
+    .card_img {
+        height: 455px;
+        max-width: 100%;
+        margin: auto;
+        overflow: visible;
+        display: flex;
+        transition: transform 0.5s linear;
+
+        &:hover {
+            transform: scale(1.1);
+            border-radius: 5px;
+        }
+    }
 }
 
 @keyframes slide {

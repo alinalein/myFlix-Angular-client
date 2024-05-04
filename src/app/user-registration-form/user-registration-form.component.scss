@@ -5,19 +5,21 @@
     width: 100%;
     max-width: 400px;
     background-color: #707070;
-}
 
-.form-input {
-    width: 100%;
-}
+    mat-card-header {
+        padding: 0;
+    }
 
-.register_button {
-    margin-bottom: 15px;
-    width: 15vw;
-    min-width: 100px;
-    font-size: medium;
-}
+    .form-input {
+        width: 100%;
+    }
 
-mat-card-header {
-    padding: 0;
+    mat-card-actions {
+        .register_button {
+            margin-bottom: 15px;
+            width: 15vw;
+            min-width: 100px;
+            font-size: medium;
+        }
+    }
 }

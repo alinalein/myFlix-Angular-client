@@ -3,21 +3,34 @@ mat-card {
     padding: 20px;
     background-color: #707070;
 
-}
+    mat-card-header {
+        justify-content: space-between;
+        padding: 0;
+        margin-bottom: 10px;
 
-mat-card-header {
-    justify-content: space-between;
-    padding: 0;
-    margin-bottom: 10px;
-}
+        .close_button {
+            border-radius: 5px;
+            background-color: #731010;
+            color: white;
+            cursor: pointer;
+            transition: box-shadow 0.2s linear;
+            box-shadow:
+                -0.2px -0.2px 5px rgba(241, 238, 238, 0.6),
+                0.2px -0.2px 5px rgba(241, 238, 238, 0.6),
+                -0.2px 0.2px 5px rgba(241, 238, 238, 0.6),
+                0.2px 0.2px 5px rgba(241, 238, 238, 0.6);
 
-.close_button {
-    border-radius: 5px;
-    background-color: transparent;
-    color: white;
-    cursor: pointer;
-}
+            &:hover {
+                box-shadow:
+                    -5px -5px 5px rgba(241, 238, 238, 0.6),
+                    5px -5px 5px rgba(241, 238, 238, 0.6),
+                    -5px 5px 5px rgba(241, 238, 238, 0.6),
+                    5px 5px 5px rgba(241, 238, 238, 0.6);
+            }
+        }
+    }
 
-mat-card-subtitle {
-    color: black;
+    mat-card-subtitle {
+        color: black;
+    }
 }
