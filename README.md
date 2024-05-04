@@ -8,7 +8,10 @@ The app will feature multiple interface views to interact with data via the REST
 ## Technology Stack 
 - **Angular :** Front-end framework for building dynamic web applications with TypeScript.
 - **Angular Material :** UI component library for Angular, providing ready-to-use components following Material Design principles.
-  
+
+## Documentation
+**JSDoc :**  Tool for documentaion of JavaScript code. Used to generate API documentation from code comments.
+
 ## Getting started
 ### Clone the repository
 
