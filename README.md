@@ -9,9 +9,6 @@ The app will feature multiple interface views to interact with data via the REST
 - **Angular :** Front-end framework for building dynamic web applications with TypeScript.
 - **Angular Material :** UI component library for Angular, providing ready-to-use components following Material Design principles.
 
-## Documentation
-**JSDoc :**  Tool for documentaion of JavaScript code. Used to generate API documentation from code comments.
-
 ## Getting started
 ### Clone the repository
 
@@ -36,6 +33,9 @@ npm install
 ```
 ng serve
 ```
+
+## Documentation in the 'docs' folder
+**Typedoc:** Documentation generator for TypeScript projects, creating API documentation from TypeScript source code comments.
 
 ## User stories
 As a user, I want to be able to create a profile and log in, so that I can view information about movies.
