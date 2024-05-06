@@ -47,7 +47,8 @@ As a user, I want to be able to receive information on the director, genre, and 
 As a user, I want to be able to remove a movie from or add a movie to my list of favorites, so that I can manage my collection based on my preferences.
 
 ## Preview
-<img width="942" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/48a2c090-18a2-46cd-a20d-3d514b0b8271">
+<img width="947" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/a0d745c9-1cb1-436f-9038-6a6f2f2c5fd9">
+
 
 ## Link to live App
  https://alinalein.github.io/myFlix-Angular-client/
