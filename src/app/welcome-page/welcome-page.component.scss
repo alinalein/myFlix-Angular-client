@@ -6,12 +6,13 @@
     height: 100vh;
 
     .welcome_title {
-        padding: 0 20px;
+        padding: 20px;
         font-size: 10vh;
         text-align: center;
         text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
 
         span {
+            color: black;
             animation: glow 4s ease-in-out infinite;
         }
     }
@@ -31,7 +32,7 @@
             left: 0;
             height: 4px;
             width: 100%;
-            background: linear-gradient(90deg, #707070, red, white, white, red, #707070);
+            background: linear-gradient(90deg, #616161, red, white, red, #616161);
             animation: slide 4s linear infinite;
         }
 

@@ -2,7 +2,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
 }
 
 .profile {
@@ -14,14 +13,19 @@
         min-width: 340px;
         margin: 1%;
         align-items: center;
-        background-color: #707070;
+        background-color: #424242;
 
         .profile_icon {
             height: auto;
             width: auto;
             font-size: 200px;
             margin-bottom: 20px;
-            color: #212121;
+            color: black;
+            border-radius: 10px;
+        }
+
+        mat-card-content .user_details {
+            color: #C62828;
         }
     }
 
@@ -29,12 +33,16 @@
         width: 50%;
         min-width: 340px;
         margin: 1%;
-        background-color: #707070;
+        background-color: #424242;
 
         .update_form {
             margin-bottom: 5px;
             display: flex;
             flex-direction: column;
+
+            mat-hint {
+                color: #E0E0E0;
+            }
         }
 
         .update_button {
@@ -59,7 +67,7 @@
 .movie_card {
     margin: 15px;
     width: 280px;
-    background-color: black;
+    background-color: #4d0000;
 
     .profile_fav_header {
         height: 20%;

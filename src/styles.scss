@@ -12,7 +12,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $myFlix-Angular-client-primary: mat.define-palette(mat.$red-palette, 900, 800);
-$myFlix-Angular-client-accent: mat.define-palette(mat.$gray-palette, 600, 700, 800);
+$myFlix-Angular-client-accent: mat.define-palette(mat.$gray-palette, 700, 800);
 
 // The warn palette is optional (defaults to red).
 $myFlix-Angular-client-warn: mat.define-palette(mat.$red-palette);
@@ -32,18 +32,18 @@ $myFlix-Angular-client-theme: mat.define-light-theme((color: (primary: $myFlix-A
 @include mat.all-component-themes($myFlix-Angular-client-theme);
 
 /* You can add global styles to this file, and also import other style files */
-// main color:Light gray #707070
+// main color: gray light: #E0E0E0 middle #616161 dark: #424242
 // secondary color: dark red #731010
 html,
 body {
   height: 100%;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #731010;
-  color: white;
+  background-color: black;
+  color: #C62828;
 
   h1,
   h2 {
-    color: white;
+    color: #9E9E9E;
   }
 }

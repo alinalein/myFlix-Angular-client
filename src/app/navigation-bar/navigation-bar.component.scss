@@ -13,7 +13,7 @@
         left: 0;
         height: 4px;
         width: 100%;
-        background: linear-gradient(to right, black, red, white, white, red, black);
+        background: linear-gradient(to right, black, red, white, red, black);
         animation: slide 4s linear infinite;
     }
 
@@ -26,7 +26,6 @@
     }
 
     .nav_title {
-        color: white;
         font-size: 35px;
     }
 
@@ -60,16 +59,16 @@
 
     0%,
     100% {
-        text-shadow: -5px -5px 5px rgba(0, 0, 0, 0.2),
-            5px -5px 5px rgba(0, 0, 0, 0.2),
-            -5px 5px 5px rgba(0, 0, 0, 0.2),
-            5px 5px 5px rgba(0, 0, 0, 0.2);
+        text-shadow: -3px -3px 5px rgba(0, 0, 0, 0.2),
+            3px -3px 5px rgba(0, 0, 0, 0.2),
+            -3px 3px 5px rgba(0, 0, 0, 0.2),
+            3px 3px 5px rgba(0, 0, 0, 0.2);
     }
 
     50% {
-        text-shadow: -5px -5px 5px rgba(255, 0, 0, 0.6),
-            5px -5px 5px rgba(255, 0, 0, 0.6),
-            -5px 5px 5px rgba(255, 0, 0, 0.6),
-            5px 5px 5px rgba(255, 0, 0, 0.6);
+        text-shadow: -3px -3px 5px rgba(255, 0, 0, 0.6),
+            3px -3px 5px rgba(255, 0, 0, 0.6),
+            -3px 3px 5px rgba(255, 0, 0, 0.6),
+            3px 3px 5px rgba(255, 0, 0, 0.6);
     }
 }

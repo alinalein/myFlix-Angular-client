@@ -9,14 +9,14 @@
     .movie_card {
         margin: 15px;
         width: 280px;
-        background-color: black;
+        background-color: #1a0000;
 
         mat-card-header {
             height: 15%;
             width: 250px;
 
             .movie_directed {
-                color: #707070;
+                color: #9E9E9E;
             }
         }
 
@@ -34,10 +34,15 @@
             }
         }
 
+        mat-card-actions button {
+            color: #9E9E9E;
+        }
+
         mat-card-actions .fav-icon {
             /* Set initial properties */
             height: auto;
             width: auto;
+
             font-size: 30px;
             cursor: pointer;
             transition: transform 0.2s linear;

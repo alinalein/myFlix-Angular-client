@@ -9,14 +9,14 @@
         </mat-card-header>
         <img mat-card-image class="card_img" src={{movie.ImagePath}} alt={{movie.Title}} />
         <mat-card-actions class="movie_buttons">
-            <button mat-button color="primary" (click)="openGenreInfo(movie.Genre.Name, movie.Genre.Description )">
+            <button mat-button (click)="openGenreInfo(movie.Genre.Name, movie.Genre.Description )">
                 Genre
             </button>
-            <button mat-button color="primary"
+            <button mat-button
                 (click)="openDirectorInfo(movie.Director.Name, movie.Director.Bio , movie.Director.Birth , movie.Director.Death)">
                 Director
             </button>
-            <button mat-button color="primary" (click)="openMovieSynopsis(movie.Description)">
+            <button mat-button (click)="openMovieSynopsis(movie.Description)">
                 Synopsis
             </button>
             <mat-icon class="fav-icon" (click)="toggleMovieInFavs(movie._id)">
