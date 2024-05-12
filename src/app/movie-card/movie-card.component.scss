@@ -6,10 +6,26 @@
     flex-wrap: wrap;
     justify-content: center;
 
+    .div_spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        width: 100px;
+        height: 100px;
+
+        .spinner {
+            color: red;
+
+        }
+    }
+
+
     .movie_card {
         margin: 15px;
         width: 280px;
-        background-color: #330000;
+        background-color: #290a0a;
 
         mat-card-header {
             height: 15%;

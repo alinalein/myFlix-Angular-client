@@ -20,7 +20,7 @@ export class UserProfileComponent implements OnInit {
   @Input() updatedUser = { Username: '', Email: '', Birthday: '' };
   favMovies: any[] = []
   user: any = {};
-
+  isLoading: boolean = true;
   /**
    * @constructor
    * @param {UserRegistrationService} userRegistrationService - Service for API calls. 
@@ -51,16 +51,18 @@ export class UserProfileComponent implements OnInit {
    * If unsuccessful, will show an error message in the console.
    */
   getFavoriteMovies(): void {
+    this.isLoading = true;
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     // fetch user's favorite movie IDs and all movies simultaneously
     this.userRegistrationService.getAllMovies().subscribe((resp: any[]) => {
       // filter movies based on favorite movie IDs
       this.favMovies = resp.filter((movie) => user.FavoriteMovies.includes(movie._id));
+      this.isLoading = false;
       console.log('Favorite Movies:', this.favMovies);
     },
       (error: any) => {
         console.error('Error fetching favorite movies:', error);
-        // handle error if needed
+        this.isLoading = false;
       }
     );
   }

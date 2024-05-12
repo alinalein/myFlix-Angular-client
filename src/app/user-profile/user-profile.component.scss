@@ -27,6 +27,10 @@
         mat-card-content .user_details {
             color: #C62828;
         }
+
+        mat-card-content .user_info {
+            color: #E0E0E0;
+        }
     }
 
     .profile_right {
@@ -64,10 +68,23 @@
     }
 }
 
+.div_spinner {
+    position: relative;
+    text-align: center;
+    top: 5%;
+    width: 100%;
+    // transform: translate(-50%, -50%);
+
+    .spinner {
+        color: red;
+        display: inline-block;
+    }
+}
+
 .movie_card {
     margin: 15px;
     width: 280px;
-    background-color: #330000;
+    background-color: #290a0a;
 
     .profile_fav_header {
         height: 20%;

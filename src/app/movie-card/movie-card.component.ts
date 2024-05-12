@@ -7,6 +7,7 @@ import { MovieSynopsisComponent } from '../movie-synopsis/movie-synopsis.compone
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { fakeAsync } from '@angular/core/testing';
 
 /**
  * @component - Component for displaying movies and actions to those movies.
@@ -18,8 +19,10 @@ import { of } from 'rxjs';
 })
 
 export class MovieCardComponent implements OnInit {
+
   movies: any[] = [];
   favMovies: any[] = [];
+  isLoading: boolean = true;
 
   /**
    * @constructor
@@ -48,14 +51,17 @@ export class MovieCardComponent implements OnInit {
    * If unsuccessful, will show an error message in the console and return an empty array.
    */
   getMovies(): void {
+    this.isLoading = true;
     this.userRegistrationService.getAllMovies().pipe(
       catchError(error => {
         console.error('Error fetching movies:', error);
+        this.isLoading = false;
         return of([]);
       })
     ).subscribe(
       (resp: any) => {
         this.movies = resp;
+        this.isLoading = false;
         console.log(this.movies)
       }
     );

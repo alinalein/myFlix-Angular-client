@@ -9,14 +9,14 @@
         <mat-icon class="profile_icon">account_box</mat-icon>
         <mat-card-content style="display: flex;">
             <div style="margin-right: 5px;">
-                <mat-card-subtitle>Username: </mat-card-subtitle>
-                <mat-card-subtitle>E-Mail: </mat-card-subtitle>
-                <mat-card-subtitle>Birtday: </mat-card-subtitle>
+                <mat-card-subtitle class="user_info">Username: </mat-card-subtitle>
+                <mat-card-subtitle class="user_info">E-Mail: </mat-card-subtitle>
+                <mat-card-subtitle class="user_info">Birtday: </mat-card-subtitle>
             </div>
             <div>
-                <mat-card-subtitle class="user_details"><b>{{user.Username}}</b></mat-card-subtitle>
-                <mat-card-subtitle class="user_details"><b>{{user.Email}}</b></mat-card-subtitle>
-                <mat-card-subtitle class="user_details"><b>{{user.Birthday | date:'longDate' }}</b></mat-card-subtitle>
+                <mat-card-subtitle class="user_details">{{user.Username}}</mat-card-subtitle>
+                <mat-card-subtitle class="user_details">{{user.Email}}</mat-card-subtitle>
+                <mat-card-subtitle class="user_details">{{user.Birthday | date:'longDate' }}</mat-card-subtitle>
             </div>
         </mat-card-content>
     </mat-card>
@@ -55,6 +55,9 @@
     </mat-card>
 </div>
 <h1 class="user_profile_div">Your Favorite Movies</h1>
+<div class="div_spinner">
+    <mat-spinner *ngIf="isLoading" diameter="50" class="spinner"></mat-spinner>
+</div>
 <div class="user_profile_div">
     <mat-card *ngFor="let movie of favMovies" class="movie_card">
         <mat-card-header class="profile_fav_header">

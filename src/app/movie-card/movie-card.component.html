@@ -2,6 +2,10 @@
 <app-navigation-bar></app-navigation-bar>
 <!-- Movie-Card component -->
 <div class="movies_div">
+    <div class="div_spinner">
+        <mat-spinner *ngIf="isLoading" diameter="50" class="spinner"></mat-spinner>
+    </div>
+
     <mat-card *ngFor="let movie of movies" class="movie_card">
         <mat-card-header>
             <mat-card-subtitle class="movie_directed">Directed by: {{movie.Director.Name}}</mat-card-subtitle>
