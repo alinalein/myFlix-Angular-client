@@ -21,6 +21,8 @@ export class UserProfileComponent implements OnInit {
   favMovies: any[] = []
   user: any = {};
   isLoading: boolean = true;
+  noFavMoviesMessage: boolean = false;
+
   /**
    * @constructor
    * @param {UserRegistrationService} userRegistrationService - Service for API calls. 
@@ -57,6 +59,7 @@ export class UserProfileComponent implements OnInit {
     this.userRegistrationService.getAllMovies().subscribe((resp: any[]) => {
       // filter movies based on favorite movie IDs
       this.favMovies = resp.filter((movie) => user.FavoriteMovies.includes(movie._id));
+      this.noFavMoviesMessage = this.favMovies.length === 0;
       this.isLoading = false;
       console.log('Favorite Movies:', this.favMovies);
     },

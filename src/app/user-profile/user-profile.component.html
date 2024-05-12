@@ -59,6 +59,9 @@
     <mat-spinner *ngIf="isLoading" diameter="50" class="spinner"></mat-spinner>
 </div>
 <div class="user_profile_div">
+    <div class="div_spinner">
+        <h3 *ngIf="noFavMoviesMessage">No movies here yet</h3>
+    </div>
     <mat-card *ngFor="let movie of favMovies" class="movie_card">
         <mat-card-header class="profile_fav_header">
             <mat-card-title>{{movie.Title}}</mat-card-title>
