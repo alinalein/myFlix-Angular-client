@@ -6,15 +6,24 @@
     height: 100vh;
 
     .welcome_title {
-        padding: 20px;
-        font-size: 10vh;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin: 40px;
         text-align: center;
-        text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    }
 
-        span {
-            color: black;
-            animation: glow 4s ease-in-out infinite;
-        }
+    .welcome_title span:first-child {
+        font-size: 8vh;
+        text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+        padding-right: 2vw;
+    }
+
+    .welcome_title span:nth-child(2) {
+        color: black;
+        font-size: 13vh;
+        animation: glow 4s ease-in-out infinite;
     }
 
     .welcome_button {
@@ -69,5 +78,11 @@
             5px -5px 5px rgba(255, 0, 0, 0.6),
             -5px 5px 5px rgba(255, 0, 0, 0.6),
             5px 5px 5px rgba(255, 0, 0, 0.6);
+    }
+}
+
+@media all and (max-width: 1050px) {
+    .main-page .welcome_title {
+        flex-direction: column;
     }
 }

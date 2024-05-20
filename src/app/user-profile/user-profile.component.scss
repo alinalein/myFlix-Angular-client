@@ -6,12 +6,12 @@
 
 .profile {
     margin-top: 63px;
-    margin-bottom: 60px;
 
     .profile_left {
         width: 20%;
         min-width: 340px;
         margin: 1%;
+        margin-bottom: 3%;
         align-items: center;
         background-color: #424242;
 
@@ -37,6 +37,7 @@
         width: 50%;
         min-width: 340px;
         margin: 1%;
+        margin-bottom: 3%;
         background-color: #424242;
 
         .update_form {
