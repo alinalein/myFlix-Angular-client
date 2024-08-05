@@ -11,7 +11,7 @@
             <div style="margin-right: 5px;">
                 <mat-card-subtitle class="user_info">Username: </mat-card-subtitle>
                 <mat-card-subtitle class="user_info">E-Mail: </mat-card-subtitle>
-                <mat-card-subtitle class="user_info">Birtday: </mat-card-subtitle>
+                <mat-card-subtitle class="user_info">Birthday: </mat-card-subtitle>
             </div>
             <div>
                 <mat-card-subtitle class="user_details">{{user.Username}}</mat-card-subtitle>
@@ -34,13 +34,13 @@
                 <div style="margin-bottom: 10px;"></div>
                 <mat-form-field>
                     <input matInput [(ngModel)]="updatedUser.Email" type="email" placeholder="Email" name="Email">
-                    <mat-hint align="start">Opional field</mat-hint>
+                    <mat-hint align="start">Optional field</mat-hint>
                 </mat-form-field>
                 <div style="margin-bottom: 10px;"></div>
                 <mat-form-field>
                     <input matInput [(ngModel)]="updatedUser.Birthday" type="date" placeholder="Birthday"
                         name="Birthday">
-                    <mat-hint align="start">Opional field</mat-hint>
+                    <mat-hint align="start">Optional field</mat-hint>
                 </mat-form-field>
             </form>
         </mat-card-content>
