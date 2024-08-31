@@ -6,6 +6,7 @@ mat-card {
     width: 100%;
     background-color: #424242;
 
+
     mat-card-header {
         padding: 0;
     }
@@ -15,10 +16,15 @@ mat-card {
     }
 
     mat-card-actions {
+        display: flex;
+        justify-content: space-between;
+        /* Vertically align items */
+        width: 96%;
 
         .login_button {
             margin-bottom: 15px;
-            width: 15vw;
+            width: 8vw;
+            min-width: 100px;
             font-size: medium;
             overflow: hidden;
 
@@ -32,6 +38,12 @@ mat-card {
                 background: linear-gradient(90deg, #B71C1C, white, white, #B71C1C, );
                 animation: slide 2s linear infinite;
             }
+        }
+
+        p {
+            color: gray;
+            padding-bottom: 15px;
+            margin: 0;
         }
     }
 }

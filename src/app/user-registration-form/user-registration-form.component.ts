@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-
+import { MatDialog } from '@angular/material/dialog';
+import { UserLoginFormComponent } from '../user-login-form/user-login-form.component';
 // you'll use this import to close the dialog on success
 import { MatDialogRef } from '@angular/material/dialog';
-
 // this import brings in the API calls we created in 6.2
 import { UserRegistrationService } from '../fetch-api-data.service';
 
@@ -30,7 +30,8 @@ export class UserRegistrationFormComponent implements OnInit {
   constructor(
     public userRegistrationService: UserRegistrationService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) { }
 
   /**
@@ -52,6 +53,7 @@ export class UserRegistrationFormComponent implements OnInit {
         this.dialogRef.close(); // will close the modal on success
         console.log(result);
         this.snackBar.open('User registered successfully', 'OK', { duration: 2000 });
+        this.openUserLoginDialog();
       },
       error: (error) => {
         console.error('Registration error:', error);
@@ -61,6 +63,14 @@ export class UserRegistrationFormComponent implements OnInit {
         }
         this.snackBar.open(errorMessage, 'OK', { duration: 2000 });
       }
+    });
+  }
+
+  openUserLoginDialog(): void {
+    this.dialogRef.close();
+    this.dialog.open(UserLoginFormComponent, {
+      width: '400px',
+      hasBackdrop: false
     });
   }
 }

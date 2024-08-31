@@ -1,11 +1,13 @@
 <div class="main-page">
-    <h1 class="welcome_title">
+    <p class="welcome_title">
         <span>Welcome to </span><span>myFlix</span>
-    </h1>
-    <button class="welcome_button" mat-raised-button color="accent" (click)=" openUserRegistrationDialog()">
-        Sign Up
-    </button>
-    <button class="welcome_button login_button" color="accent" mat-raised-button (click)="openUserLoginDialog()">
-        Login
-    </button>
+    </p>
+    <div class="button_div">
+        <button class="welcome_button" mat-raised-button color="accent" (click)="openUserRegistrationDialog()">
+            Signup
+        </button>
+        <button class="welcome_button login_button" color="accent" mat-raised-button (click)="openUserLoginDialog()">
+            Login
+        </button>
+    </div>
 </div>

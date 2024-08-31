@@ -13,15 +13,34 @@
     .form-input {
         width: 100%;
 
-        mat-hint {
-            color: #E0E0E0;
+        .hint-wrong {
+            color: red;
+            font-weight: bold;
+            font-size: small;
+        }
+
+        .hint-right {
+            color: green;
+            font-weight: bold;
+            font-size: small;
+        }
+
+        .valid-form-field {
+            color: green;
+            font-weight: bold;
         }
     }
 
     mat-card-actions {
+        display: flex;
+        justify-content: space-between;
+        /* Vertically align items */
+        width: 96%;
+        align-items: center;
+
         .register_button {
             margin-bottom: 15px;
-            width: 15vw;
+            width: 8vw;
             min-width: 100px;
             font-size: medium;
             overflow: hidden;
@@ -37,7 +56,17 @@
                 animation: slide 2s linear infinite;
             }
         }
+
+        p {
+            color: gray;
+            padding-bottom: 15px;
+            margin: 0;
+        }
     }
+}
+
+.mat-mdc-text-field-wrapper {
+    border: 2px solid green !important;
 }
 
 @keyframes slide {

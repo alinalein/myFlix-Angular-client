@@ -1,19 +1,31 @@
 <mat-card class="register_card">
     <mat-card-header>
-        <h2>Sign Up</h2>
+        <h2>Signup</h2>
     </mat-card-header>
     <mat-card-content>
         <form (keydown.enter)="registerUser()">
             <mat-form-field class="form-input">
                 <input matInput [(ngModel)]="userData.Username" placeholder="Username" type="text" name="Username"
-                    required>
-                <mat-hint align="start">At least 5 characters.</mat-hint>
+                    #usernameInput="ngModel" required>
+                <mat-hint *ngIf="usernameInput.value?.length < 5" align="start" class="hint-wrong">
+                    At least 5 characters.
+                </mat-hint>
+                <mat-hint *ngIf="usernameInput.value?.length >= 5" align="start" class="hint-right">
+                    Username matches the requirements.
+                </mat-hint>
             </mat-form-field>
             <div style="margin-bottom: 10px;"></div>
             <mat-form-field class="form-input">
                 <input matInput [(ngModel)]="userData.Password" type="password" placeholder="Password" name="Password"
+                    [ngClass]="{'valid-form-field': passwordInput.value?.length >= 8}" #passwordInput="ngModel"
                     required>
-                <mat-hint align="start">At least 8 characters.</mat-hint>
+                <mat-hint *ngIf="passwordInput.value?.length < 8" align="start" class="hint-wrong">
+                    At least 8 characters.
+                </mat-hint>
+                <!-- Hint text when the password meets the 8-character requirement -->
+                <mat-hint *ngIf="passwordInput.value?.length >= 8" align="start" class="hint-right">
+                    Password matches the requirements.
+                </mat-hint>
             </mat-form-field>
             <div style="margin-bottom: 10px;"></div>
             <mat-form-field class="form-input">
@@ -28,5 +40,8 @@
         <button mat-raised-button color="primary" (click)="registerUser()" class="register_button">
             Sign Up
         </button>
+        <div>
+            <p>Have an account? <a (click)="openUserLoginDialog()" style="cursor: pointer; color: white;">Login!</a></p>
+        </div>
     </mat-card-actions>
 </mat-card>

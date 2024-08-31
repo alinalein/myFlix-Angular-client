@@ -1,15 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-
 // you'll use this import to close the dialog on success
 import { MatDialogRef } from '@angular/material/dialog';
-
+import { MatDialog } from '@angular/material/dialog';
 // this import brings in the API calls we created in 6.2
 import { UserRegistrationService } from '../fetch-api-data.service';
 
 // this import is used to display notifications back to the user
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { UserRegistrationFormComponent } from '../user-registration-form/user-registration-form.component';
 /**
  * @component - Component for the user to log in.
  */
@@ -32,7 +32,8 @@ export class UserLoginFormComponent implements OnInit {
     public userRegistrationService: UserRegistrationService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   /**
@@ -65,6 +66,15 @@ export class UserLoginFormComponent implements OnInit {
           duration: 2000
         });
       }
+    });
+  }
+
+  openUserRegistrationDialog(): void {
+    this.dialogRef.close();
+    this.dialog.open(UserRegistrationFormComponent, {
+      width: '400px',
+      // Removes the gray layer on top of the welcome component.
+      hasBackdrop: false
     });
   }
 }

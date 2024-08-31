@@ -16,7 +16,10 @@
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button (click)="loginUser()" color="primary" class="login_button">
-            Login
+            Log In
         </button>
+        <p>
+            New to myFlix? <a (click)="openUserRegistrationDialog()" style="cursor: pointer; color: white;">Signup!</a>
+        </p>
     </mat-card-actions>
 </mat-card>
