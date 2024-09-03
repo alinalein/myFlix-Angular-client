@@ -51,5 +51,6 @@ As a user, I want to be able to remove a movie from or add a movie to my list of
 
 ## Preview
 <img width="200" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/565d9f13-5167-459f-8c65-d18c36dd2143">
+<img width="200" alt="image" src="https://github.com/user-attachments/assets/17d5f310-eb7c-4a16-9288-b04d9ba05a20">
 <img width="200" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/161db937-d86e-4b99-aca0-eaea7ae2e8e9">
 <img width="943" alt="image" src="https://github.com/alinalein/myFlix-Angular-client/assets/111589183/4bbf14bc-a196-47f3-b5c4-e3a7f0c3c508">
