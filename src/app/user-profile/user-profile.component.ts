@@ -18,10 +18,17 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class UserProfileComponent implements OnInit {
   @Input() updatedUser = { Username: '', Email: '', Birthday: '' };
-  favMovies: any[] = []
   user: any = {};
-  isLoading: boolean = true;
+
+  isLoadingMovies: boolean = true;
   noFavMoviesMessage: boolean = false;
+  favMovies: any[] = []
+
+  isLoadingImages: boolean = true;
+  selectedFile: File | null = null;
+  thumbnails: any[] = [];
+  // key will be a string, url created from it will also be a string, object like dictionary 
+  imageUrls: { [key: string]: string } = {};
 
   /**
    * @constructor
@@ -44,7 +51,8 @@ export class UserProfileComponent implements OnInit {
   // will need to fetch the user data from localStorage and access the user.FavoriteMovies
   ngOnInit(): void {
     this.getFavoriteMovies();
-    this.getUserData()
+    this.getUserData();
+    this.loadThumbnails();
   }
 
   /**
@@ -53,19 +61,19 @@ export class UserProfileComponent implements OnInit {
    * If unsuccessful, will show an error message in the console.
    */
   getFavoriteMovies(): void {
-    this.isLoading = true;
+    this.isLoadingMovies = true;
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     // fetch user's favorite movie IDs and all movies simultaneously
     this.userRegistrationService.getAllMovies().subscribe((resp: any[]) => {
       // filter movies based on favorite movie IDs
       this.favMovies = resp.filter((movie) => user.FavoriteMovies.includes(movie._id));
       this.noFavMoviesMessage = this.favMovies.length === 0;
-      this.isLoading = false;
+      this.isLoadingMovies = false;
       console.log('Favorite Movies:', this.favMovies);
     },
       (error: any) => {
         console.error('Error fetching favorite movies:', error);
-        this.isLoading = false;
+        this.isLoadingMovies = false;
       }
     );
   }
@@ -139,6 +147,123 @@ export class UserProfileComponent implements OnInit {
         let errorMessage = 'An error occurred while deleting your account. Please try again later.';
         this.snackBar.open(errorMessage, 'OK', { duration: 2000 });
       }
+    });
+  }
+
+  /**
+   * Uploads a selected image to an AWS S3 bucket.
+   * If no file is selected, prompts the user to select one.
+   * On success, clears the file input and adds the image to thumbnails.
+   * On failure, displays an error message and logs the error.
+   */
+  uploadImage(): void {
+    // Check if a file is selected
+    if (!this.selectedFile) {
+      alert('Please select an image file to upload.');
+      return;
+    }
+
+    // Upload the selected file to S3
+    this.userRegistrationService.uploadImageToS3(this.selectedFile).subscribe({
+      next: () => {
+        console.log('Image uploaded successfully.');
+
+        // Clear the file input field
+        const fileInput = document.getElementById('fileInput') as HTMLInputElement | null;
+        if (fileInput) {
+          fileInput.value = '';
+        }
+
+        // Append the new image to the list and fetch its URL
+        this.addNewImageToThumbnails();
+      },
+      error: (error) => {
+        console.error('Error uploading image:', error);
+        alert(error.status === 409 ? 'This file has already been uploaded.' : 'There was an error uploading the image.');
+      },
+    });
+  }
+
+  /**
+ * Adds a newly uploaded image to the list of thumbnails.
+ * Generates a new image key based on the selected file's name.
+ * Checks if the image is already in the list, if not, adds it.
+ * Fetches the image URL from S3 and stores it for display.
+ */
+  addNewImageToThumbnails(): void {
+    // ! to make sure that selectedFile is not null 
+    const newImageKey = `resized-images/${this.selectedFile!.name}`;
+
+    // Check if the new image key already exists, if not add to list
+    if (!this.thumbnails.includes(newImageKey)) {
+      this.thumbnails.push(newImageKey);
+
+      // Fetch the new image URL
+      this.userRegistrationService.getSpecificImageFromS3(newImageKey).subscribe(
+        (imageUrl) => this.imageUrls[newImageKey] = imageUrl, // Add the URL to imageUrls object
+        (error) => console.error('Error fetching image:', error)
+      );
+    }
+  }
+
+  /**
+   * Handles the file selection event from the input element.
+   * Sets the selected file to be uploaded.
+   * @param event - The file input change event.
+   */
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
+  /**
+   * Loads all thumbnail image keys from an AWS S3 bucket.
+   * Fetches all images with the 'thumbnail' prefix from S3.
+   * Sorts the images by their last modified date.
+   * Stores the sorted image keys in the `thumbnails` array.
+   * Calls `loadImages` to fetch the actual image URLs.
+   * Handles loading state and logs warnings or errors if needed.
+   */
+  loadThumbnails(): void {
+    this.isLoadingImages = true
+    this.userRegistrationService.getAllImagesFromS3('thumbnail').subscribe(
+      (response) => {
+        if (response && response.Contents) {
+          this.thumbnails = response.Contents
+            .sort((a: any, b: any) => new Date(a.LastModified).getTime() - new Date(b.LastModified).getTime())
+            .map((item: any) => item.Key);
+
+          this.loadImages(); // Load the actual images using the keys
+        } else {
+          console.warn('No contents found in the response');
+        }
+        this.isLoadingImages = false
+      },
+      (error: any) => {
+        console.error('Error fetching images:', error);
+        this.isLoadingImages = false
+      }
+    );
+  }
+
+  /**
+   * Loads the actual image URLs for each thumbnail key from S3.
+   * Iterates over the `thumbnails` array to fetch each image URL.
+   * Stores the image URL in the `imageUrls` object with the corresponding key.
+   * Logs an error if fetching any image fails.
+   */
+  loadImages(): void {
+    this.thumbnails.forEach((key: string) => {
+      this.userRegistrationService.getSpecificImageFromS3(key).subscribe(
+        (imageUrl) => {
+          this.imageUrls[key] = imageUrl; // Store the image URL to corresponding  key in the imageUrls object
+        },
+        (error: any) => {
+          console.error('Error fetching image:', error);
+        }
+      );
     });
   }
 }

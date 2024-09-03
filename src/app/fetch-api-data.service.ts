@@ -4,8 +4,8 @@ import { Observable, throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 // declaring the api url that will provide data for the client app
-const apiUrl = 'https://movie-api-lina-834bc70d6952.herokuapp.com/';
-// const apiUrl = 'http://localhost:8080/';
+// const apiUrl = 'https://movie-api-lina-834bc70d6952.herokuapp.com/';
+const apiUrl = 'http://localhost:8080/';
 
 // service for fetching data from the API
 @Injectable({
@@ -244,7 +244,7 @@ export class UserRegistrationService {
 
   /**
    * Deletes a movie from the users favorite movies by making a DELETE request to the corresponding endpoint.
-   * @param {String} MovieID - ID of the movie to be removed from favorites-
+   * @param {String} MovieID - ID of the movie to be removed from favorites
    * @returns {Observable<any>} Observable that emits the API response.
    */
   deleteMovieFromFavs(MovieID: string): Observable<any> {
@@ -264,6 +264,76 @@ export class UserRegistrationService {
         return result;
       }),
       catchError(this.handleError)
+    );
+  }
+
+  /**
+  * Lists all objects in an S3 bucket depending on the specified type by making a GET request to the corresponding endpoint.
+  * @param {String} type - Either 'original' or 'thumbnail', specifying the type of pictures to load.
+  * @returns {Observable<any>} Observable that emits the API response containing the list of images.
+  */
+  getAllImagesFromS3(type: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const url = `${apiUrl}images/${type}`;
+
+    return this.http.get(url, {
+      headers: new HttpHeaders(
+        {
+          Authorization: 'Bearer ' + token,
+        })
+    }).pipe(
+      map(this.extractResponseData),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+  * Retrieves a specific object from an S3 bucket depending on the specified type and key by making a GET request to the corresponding endpoint.
+  * @param {String} key - Key of the image to be retrieved from the S3 bucket.
+  * @returns {Observable<any>} Observable that emits the API response containing the image data.
+  */
+  getSpecificImageFromS3(key: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const url = `${apiUrl}images/${key}`;
+
+    return this.http.get(url, {
+      headers: new HttpHeaders(
+        {
+          Authorization: 'Bearer ' + token,
+        }),
+      // Response should be treated as a binary large object (Blob), data like images, audio, video
+      responseType: 'blob'
+    }).pipe(
+      // Blod, the data returned by API
+      map((response: Blob) => {
+        // Create a URL from the Blob object, what allows display in <img> element's src attribute to display the image
+        return URL.createObjectURL(response);
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+    * Uploads an image to the cloud via a POST request to the corresponding endpoint.
+    * @param {File} image - The image file to be uploaded to the cloud.
+    * @returns {Observable<any>} - Observable that emits the API response.
+    */
+  public uploadImageToS3(file: File): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    return this.http.post(apiUrl + 'images/', formData, {
+      headers: new HttpHeaders(
+        {
+          Authorization: 'Bearer ' + token,
+        })
+    }).pipe(
+      catchError((error) => {
+        console.error('Error uploading image to S3:', error);
+        throw error;
+      })
     );
   }
 }

@@ -82,34 +82,99 @@
     }
 }
 
-.movie_card {
-    margin: 15px;
-    width: 280px;
-    background-color: #290a0a;
-    border: 1px solid #9E9E9E;
+.mat-background-primary {
+    --mat-tab-header-with-background-background-color: black;
+    --mat-tab-header-with-background-foreground-color: #B71C1C;
+}
 
-    .profile_fav_header {
-        height: 20%;
-        width: 240px;
+.tab-content {
+    .movie_card {
+        margin: 15px;
+        width: 280px;
+        background-color: #290a0a;
+        border: 1px solid #9E9E9E;
 
-        .movie_text {
-            color: #707070;
+        .profile_fav_header {
+            height: 20%;
+            width: 240px;
+
+            .movie_text {
+                color: #707070;
+            }
+        }
+
+        .card_img {
+            height: 455px;
+            max-width: 100%;
+            margin: auto;
+            overflow: visible;
+            display: flex;
+            transition: transform 0.5s linear;
+
+            &:hover {
+                transform: scale(1.1);
+                border-radius: 5px;
+            }
         }
     }
 
-    .card_img {
-        height: 455px;
-        max-width: 100%;
-        margin: auto;
-        overflow: visible;
+    .images_div {
         display: flex;
-        transition: transform 0.5s linear;
+        align-items: center;
+        flex-direction: column;
 
-        &:hover {
-            transform: scale(1.1);
-            border-radius: 5px;
+        .toupload_images_div {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding-top: 5px;
+            padding-bottom: 10px;
+
+            .upload_button {
+                margin: 10px 0;
+                position: relative;
+                overflow: hidden;
+                color: white;
+                background-color: #290a0a;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    height: 3px;
+                    width: 100%;
+                    background: linear-gradient(90deg, #290a0a, #B71C1C, #B71C1C, #290a0a);
+                    animation: slide 2s linear infinite;
+                }
+            }
+        }
+
+        .uploaded_images_div {
+            flex-wrap: wrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            margin: 5px;
+
+            .single_image_div {
+                display: flex;
+                height: 220px;
+                background-color: black;
+                border: 1px solid #9E9E9E;
+                margin: 10px;
+                align-items: center;
+                justify-content: center;
+                border-radius: 4px;
+            }
         }
     }
+}
+
+.fav_title {
+    padding-top: 20px;
 }
 
 @keyframes slide {

@@ -54,20 +54,66 @@
         </mat-card-actions>
     </mat-card>
 </div>
-<h1 class="user_profile_div fav_title">Your Favorite Movies</h1>
-<div class="div_spinner">
-    <mat-spinner *ngIf="isLoading" diameter="50" class="spinner"></mat-spinner>
-</div>
-<div class="user_profile_div">
-    <div class="div_spinner">
-        <h3 *ngIf="noFavMoviesMessage">No movies here yet</h3>
-    </div>
-    <mat-card *ngFor="let movie of favMovies" class="movie_card">
-        <mat-card-header class="profile_fav_header">
-            <mat-card-title>{{movie.Title}}</mat-card-title>
-            <mat-card-subtitle class="movie_text"><b>Directed by: </b>{{movie.Director.Name}}</mat-card-subtitle>
-            <mat-card-subtitle class="movie_text"><b>Actors: </b>{{movie.Actors.join(', ')}}</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image src="{{movie.ImagePath}}" alt="{{movie.Title}}" class="card_img" />
-    </mat-card>
-</div>
+<!-- Angular Material Tab Group -->
+<mat-tab-group mat-stretch-tabs dynamicHeight backgroundColor="primary" class="tab-content">
+    <!-- Tab for Favorite Movies -->
+    <mat-tab label="Favorite Movies">
+        <div *ngIf="!isLoadingMovies; else loading">
+            <h2 class="user_profile_div fav_title">Your Favorite Movies</h2>
+            <div class="user_profile_div">
+                <div class="div_spinner">
+                    <h3 *ngIf="noFavMoviesMessage">No movies here yet</h3>
+                </div>
+                <!-- Display favorite movies -->
+                <mat-card *ngFor="let movie of favMovies" class="movie_card">
+                    <mat-card-header class="profile_fav_header">
+                        <mat-card-title>{{ movie.Title }}</mat-card-title>
+                        <mat-card-subtitle class="movie_text"><b>Directed by:</b> {{ movie.Director.Name
+                            }}</mat-card-subtitle>
+                        <mat-card-subtitle class="movie_text"><b>Actors:</b> {{ movie.Actors.join(', ')
+                            }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image [src]="movie.ImagePath" [alt]="movie.Title" class="card_img" />
+                </mat-card>
+            </div>
+        </div>
+        <!-- Loading Spinner -->
+        <ng-template #loading>
+            <div class="div_spinner">
+                <mat-spinner diameter="50" class="spinner"></mat-spinner>
+            </div>
+        </ng-template>
+    </mat-tab>
+
+    <!-- Tab for Upload Images -->
+    <mat-tab label="Upload Images">
+        <div class="images_div fav_title">
+            <h2>Upload Your Images Here</h2>
+            <!-- Image upload logic -->
+            <form (submit)="uploadImage()" class="toupload_images_div">
+                <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" />
+                <button mat-raised-button class="upload_button" type="submit">Upload Image</button>
+            </form>
+
+            <!-- Show loading spinner while thumbnails are loading -->
+            <div *ngIf="!isLoadingImages; else loadingThumbnails">
+                <div *ngIf="thumbnails.length > 0; else noThumbnails" class="uploaded_images_div">
+                    <div *ngFor="let key of thumbnails" class="single_image_div">
+                        <img *ngIf="imageUrls[key]" [src]="imageUrls[key]" alt="{{ key }}"
+                            style="width: auto; height: 200px;" /><br />
+                    </div>
+                </div>
+                <ng-template #noThumbnails class="div_spinner">
+                    <h3>No images uploaded yet</h3>
+                </ng-template>
+            </div>
+
+            <!-- Loading Spinner for Thumbnails -->
+            <ng-template #loadingThumbnails>
+                <div class="div_spinner">
+                    <mat-spinner diameter="50" class="spinner"></mat-spinner>
+                </div>
+            </ng-template>
+        </div>
+    </mat-tab>
+</mat-tab-group>
