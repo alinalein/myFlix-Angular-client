@@ -100,7 +100,7 @@
                 <div *ngIf="thumbnails.length > 0; else noThumbnails" class="uploaded_images_div">
                     <div *ngFor="let key of thumbnails" class="single_image_div">
                         <img *ngIf="imageUrls[key]" [src]="imageUrls[key]" alt="{{ key }}"
-                            style="width: auto; height: 200px;" /><br />
+                            style="width: auto; height: 200px;" />
                     </div>
                 </div>
                 <ng-template #noThumbnails class="div_spinner">

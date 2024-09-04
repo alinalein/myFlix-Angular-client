@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 // you'll use this import to close the dialog on success
 import { MatDialog } from '@angular/material/dialog';
+import { NgStyle } from '@angular/common';
 
 /**
  * @component - Component for displaying user details and action of the details.
@@ -151,31 +152,56 @@ export class UserProfileComponent implements OnInit {
   }
 
   /**
-   * Uploads a selected image to an AWS S3 bucket.
-   * If no file is selected, prompts the user to select one.
-   * On success, clears the file input and adds the image to thumbnails.
-   * On failure, displays an error message and logs the error.
-   */
+  * Uploads a selected image to an AWS S3 bucket.
+  * If no file is selected, prompts the user to select one.
+  * Checks if the selected image has a valid file format (JPEG, PNG, GIF, or WebP); if not, displays an alert and aborts.
+  * If successful, the selected image is uploaded to S3, the file input field is cleared, and the list of image keys is fetched from S3 to identify and add the newest image key to the `thumbnails` array.
+  * Fetches the URL of the newly added image and stores it in the `imageUrls` object.
+  * If unsuccessful, displays an appropriate error message (e.g., duplicate upload or general upload error) and logs the error to the console.
+  */
   uploadImage(): void {
     // Check if a file is selected
-    if (!this.selectedFile) {
-      alert('Please select an image file to upload.');
-      return;
+    if (!this.selectedFile) return alert('Please select an image file to upload.');
+
+    // Check for valid file format
+    const allowedFormats = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedFormats.includes(this.selectedFile.type)) {
+      return alert('Unallowed file format. Please upload a JPEG, PNG, GIF, or WebP image.');
     }
 
     // Upload the selected file to S3
     this.userRegistrationService.uploadImageToS3(this.selectedFile).subscribe({
       next: () => {
         console.log('Image uploaded successfully.');
-
+        alert('Image was uploaded')
         // Clear the file input field
         const fileInput = document.getElementById('fileInput') as HTMLInputElement | null;
-        if (fileInput) {
-          fileInput.value = '';
-        }
+        if (fileInput) fileInput.value = '';
 
-        // Append the new image to the list and fetch its URL
-        this.addNewImageToThumbnails();
+        setTimeout(() => {
+
+          this.userRegistrationService.getAllImagesFromS3('thumbnail').subscribe(
+            (response) => {
+              if (response && response.Contents) {
+                // Sort the images by LastModified date in descending order
+                const sortedImages = response.Contents
+                  .filter((item: any) => item.Key && !item.Key.endsWith('/')) // Filter out empty items
+                  .sort((a: any, b: any) => new Date(b.LastModified).getTime() - new Date(a.LastModified).getTime());
+
+                if (sortedImages.length > 0) {
+                  // Get the newest image key
+                  const newImageKey = sortedImages[0].Key;
+
+                  // Add the new image to thumbnails and load its URL
+                  this.addNewImageToThumbnails(newImageKey);
+                }
+              }
+            },
+            (error) => {
+              console.error('Error fetching images from S3:', error);
+            }
+          );
+        }, 800);
       },
       error: (error) => {
         console.error('Error uploading image:', error);
@@ -185,57 +211,59 @@ export class UserProfileComponent implements OnInit {
   }
 
   /**
- * Adds a newly uploaded image to the list of thumbnails.
- * Generates a new image key based on the selected file's name.
- * Checks if the image is already in the list, if not, adds it.
- * Fetches the image URL from S3 and stores it for display.
- */
-  addNewImageToThumbnails(): void {
-    // ! to make sure that selectedFile is not null 
-    const newImageKey = `resized-images/${this.selectedFile!.name}`;
-
-    // Check if the new image key already exists, if not add to list
+   * Adds a new image key to the `thumbnails` array and fetches its corresponding image URL from S3.
+   * Checks if the provided `newImageKey` already exists in the `thumbnails` array to avoid duplicates.
+   * If the `newImageKey` does not exist:
+   * - Adds the key to the `thumbnails` array.
+   * - Fetches the image URL from S3 using the `newImageKey`.
+   * - Stores the fetched image URL in the `imageUrls` object.
+   * If successful, the new image key is added to the `thumbnails` array and its URL is stored in the `imageUrls` object.
+   * If unsuccessful, logs a message indicating that the key is already present, or logs an error if fetching the image URL fails.
+   */
+  addNewImageToThumbnails(newImageKey: string): void {
+    // Check if the new image key already exists; if not, add to the list
     if (!this.thumbnails.includes(newImageKey)) {
       this.thumbnails.push(newImageKey);
 
-      // Fetch the new image URL
+      // Fetch the new image URL from S3
       this.userRegistrationService.getSpecificImageFromS3(newImageKey).subscribe(
-        (imageUrl) => this.imageUrls[newImageKey] = imageUrl, // Add the URL to imageUrls object
-        (error) => console.error('Error fetching image:', error)
+        (imageUrl) => {
+          // Add the URL to the imageUrls object
+          this.imageUrls[newImageKey] = imageUrl;
+          console.log(`New image added to cache for key: ${newImageKey}`);
+        },
+        (error) => {
+          console.error('Error fetching image:', error);
+        }
       );
-    }
-  }
-
-  /**
-   * Handles the file selection event from the input element.
-   * Sets the selected file to be uploaded.
-   * @param event - The file input change event.
-   */
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+    } else {
+      console.log('Image key already exists in the thumbnails list.');
     }
   }
 
   /**
    * Loads all thumbnail image keys from an AWS S3 bucket.
-   * Fetches all images with the 'thumbnail' prefix from S3.
-   * Sorts the images by their last modified date.
-   * Stores the sorted image keys in the `thumbnails` array.
-   * Calls `loadImages` to fetch the actual image URLs.
-   * Handles loading state and logs warnings or errors if needed.
+   * Fetches images with the 'thumbnail' prefix from S3.
+   * Filters out empty items representing folders.
+   * Sorts image keys by their last modified date in ascending order.
+   * If successful, stores the sorted keys in the `thumbnails` array and calls `loadImages()` to fetch their URLs.
+   * If unsuccessful, logs a warning if no contents are found or logs an error if the S3 request fails.
    */
   loadThumbnails(): void {
-    this.isLoadingImages = true
+    this.isLoadingImages = true;
+
     this.userRegistrationService.getAllImagesFromS3('thumbnail').subscribe(
       (response) => {
         if (response && response.Contents) {
           this.thumbnails = response.Contents
+            // Filters out the empty item in S3 bucket that was created while (folder) in S3 created
+            .filter((item: any) => item.Key && !item.Key.endsWith('/'))
+            // Sorts the items according to which item is larger than the other 
             .sort((a: any, b: any) => new Date(a.LastModified).getTime() - new Date(b.LastModified).getTime())
             .map((item: any) => item.Key);
 
           this.loadImages(); // Load the actual images using the keys
+
         } else {
           console.warn('No contents found in the response');
         }
@@ -250,20 +278,42 @@ export class UserProfileComponent implements OnInit {
 
   /**
    * Loads the actual image URLs for each thumbnail key from S3.
-   * Iterates over the `thumbnails` array to fetch each image URL.
-   * Stores the image URL in the `imageUrls` object with the corresponding key.
-   * Logs an error if fetching any image fails.
+   * Iterates over the `thumbnails` array and checks if each image URL is already cached in the `imageUrls` object.
+   * If an image URL is already in the cache, it logs a message indicating the cache hit.
+   * If an image URL is not found in the cache, it fetches the image URL from S3 and stores it in the cache (`imageUrls` object) using the corresponding key.
+   * If successful, the image URL is stored in the `imageUrls` object.
+   * If unsuccessful, it logs an error indicating that fetching the image from S3 has failed.
    */
   loadImages(): void {
     this.thumbnails.forEach((key: string) => {
-      this.userRegistrationService.getSpecificImageFromS3(key).subscribe(
-        (imageUrl) => {
-          this.imageUrls[key] = imageUrl; // Store the image URL to corresponding  key in the imageUrls object
-        },
-        (error: any) => {
-          console.error('Error fetching image:', error);
-        }
-      );
+      // Check if the image is already in the cache
+      if (this.imageUrls[key]) {
+        // Image is in the cache, use it
+        console.log(`Image for key ${key} found in cache.`);
+      } else {
+        // If not, fetch it from S3 and store it in the cache
+        this.userRegistrationService.getSpecificImageFromS3(key).subscribe(
+          (imageUrl) => {
+            // Store the fetched image URL in the cache
+            this.imageUrls[key] = imageUrl;
+          },
+          (error: any) => {
+            console.error('Error fetching image:', error);
+          }
+        );
+      }
     });
+  }
+
+  /**
+   * Handles the file selection event from the input element.
+   * Sets the selected file to be uploaded.
+   * @param event - The file input change event.
+   */
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
   }
 }

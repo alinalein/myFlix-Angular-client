@@ -48,6 +48,7 @@ export class UserRegistrationService {
     const body = res;
     return body || {};
   }
+  // User calls 
 
   /**
    * Registers a new user by making a POST request to the user registration endpoint.
@@ -117,6 +118,8 @@ export class UserRegistrationService {
       catchError(this.handleError)
     );
   }
+
+  // Movies calls 
 
   /**
    * Retrieves all movies from the database by making a GET request to the corresponding endpoint.
@@ -266,6 +269,8 @@ export class UserRegistrationService {
       catchError(this.handleError)
     );
   }
+
+  // S3 bucket calls 
 
   /**
   * Lists all objects in an S3 bucket depending on the specified type by making a GET request to the corresponding endpoint.
