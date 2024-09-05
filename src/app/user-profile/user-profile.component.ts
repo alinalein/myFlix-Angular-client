@@ -152,13 +152,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   /**
-  * Uploads a selected image to an AWS S3 bucket.
-  * If no file is selected, prompts the user to select one.
-  * Checks if the selected image has a valid file format (JPEG, PNG, GIF, or WebP); if not, displays an alert and aborts.
-  * If successful, the selected image is uploaded to S3, the file input field is cleared, and the list of image keys is fetched from S3 to identify and add the newest image key to the `thumbnails` array.
-  * Fetches the URL of the newly added image and stores it in the `imageUrls` object.
-  * If unsuccessful, displays an appropriate error message (e.g., duplicate upload or general upload error) and logs the error to the console.
-  */
+   * Uploads a selected image file to AWS S3.
+   * 
+   * Checks if a file is selected and verifies its format (JPEG, PNG, GIF, WebP).
+   * Uploads the file to S3 if valid.
+   * Clears the input field after a successful upload.
+   * Initiates a fetch to load the uploaded image with exponential backoff.
+   * Alerts the user on success or error and logs messages for debugging.
+   */
   uploadImage(): void {
     // Check if a file is selected
     if (!this.selectedFile) return alert('Please select an image file to upload.');
@@ -173,35 +174,14 @@ export class UserProfileComponent implements OnInit {
     this.userRegistrationService.uploadImageToS3(this.selectedFile).subscribe({
       next: () => {
         console.log('Image uploaded successfully.');
-        alert('Image was uploaded')
+
         // Clear the file input field
         const fileInput = document.getElementById('fileInput') as HTMLInputElement | null;
         if (fileInput) fileInput.value = '';
 
         setTimeout(() => {
-
-          this.userRegistrationService.getAllImagesFromS3('thumbnail').subscribe(
-            (response) => {
-              if (response && response.Contents) {
-                // Sort the images by LastModified date in descending order
-                const sortedImages = response.Contents
-                  .filter((item: any) => item.Key && !item.Key.endsWith('/')) // Filter out empty items
-                  .sort((a: any, b: any) => new Date(b.LastModified).getTime() - new Date(a.LastModified).getTime());
-
-                if (sortedImages.length > 0) {
-                  // Get the newest image key
-                  const newImageKey = sortedImages[0].Key;
-
-                  // Add the new image to thumbnails and load its URL
-                  this.addNewImageToThumbnails(newImageKey);
-                }
-              }
-            },
-            (error) => {
-              console.error('Error fetching images from S3:', error);
-            }
-          );
-        }, 800);
+          this.loadImagesWithRetry('thumbnail', 5); // 5 is the maximum number of attempts
+        }, 500);
       },
       error: (error) => {
         console.error('Error uploading image:', error);
@@ -211,34 +191,82 @@ export class UserProfileComponent implements OnInit {
   }
 
   /**
-   * Adds a new image key to the `thumbnails` array and fetches its corresponding image URL from S3.
-   * Checks if the provided `newImageKey` already exists in the `thumbnails` array to avoid duplicates.
-   * If the `newImageKey` does not exist:
-   * - Adds the key to the `thumbnails` array.
-   * - Fetches the image URL from S3 using the `newImageKey`.
-   * - Stores the fetched image URL in the `imageUrls` object.
-   * If successful, the new image key is added to the `thumbnails` array and its URL is stored in the `imageUrls` object.
-   * If unsuccessful, logs a message indicating that the key is already present, or logs an error if fetching the image URL fails.
+   * Fetches image keys from S3 with exponential backoff.
+   * 
+   * Retrieves image keys matching the specified type from S3.
+   * Delays each retry to allow for image processing.
+   * Filters and sorts keys by last modified date.
+   * Adds new keys to `thumbnails` and fetches their URLs.
+   * Retries fetching up to a maximum number of attempts if needed.
+   * Logs progress and alerts the user if fetching fails.
    */
-  addNewImageToThumbnails(newImageKey: string): void {
-    // Check if the new image key already exists; if not, add to the list
-    if (!this.thumbnails.includes(newImageKey)) {
-      this.thumbnails.push(newImageKey);
+  loadImagesWithRetry(type: string, maxAttempts: number, attempt: number = 1, delay: number = 1500): void {
+    //number = 1000 less that 1000, will try fetch images eventhough those not uploded -> trigger always 
+    console.log(`Attempt ${attempt}: Fetching images with delay ${delay}ms...`);
 
-      // Fetch the new image URL from S3
-      this.userRegistrationService.getSpecificImageFromS3(newImageKey).subscribe(
-        (imageUrl) => {
-          // Add the URL to the imageUrls object
-          this.imageUrls[newImageKey] = imageUrl;
-          console.log(`New image added to cache for key: ${newImageKey}`);
+    setTimeout(() => {
+      this.userRegistrationService.getAllImagesFromS3(type).subscribe(
+        (response) => {
+          const sortedImages = response?.Contents
+            ?.filter((item: any) => item.Key && !item.Key.endsWith('/'))
+            .sort((a: any, b: any) => new Date(b.LastModified).getTime() - new Date(a.LastModified).getTime()) || [];
+
+          if (sortedImages.length > 0) {
+            const newImageKey = sortedImages[0].Key;
+            console.log('image keys:', this.thumbnails)
+            if (!this.thumbnails.includes(newImageKey)) {
+              this.addNewImageToThumbnails(newImageKey);
+              alert('Image was uploaded');
+              console.log('is uploaded:', newImageKey)
+            } else {
+              alert('Image has already been uploaded');
+              console.log('Image was already uploaded:', newImageKey)
+            }
+          } else {
+            retry();
+          }
         },
         (error) => {
-          console.error('Error fetching image:', error);
+          console.error('Error fetching images from S3:', error);
+          retry();
         }
       );
-    } else {
-      console.log('Image key already exists in the thumbnails list.');
-    }
+
+      const retry = () => {
+        if (attempt < maxAttempts) {
+          console.log(`Retrying... Attempt ${attempt + 1}`);
+          this.loadImagesWithRetry(type, maxAttempts, attempt + 1, delay * 2);
+        } else {
+          console.error('Max attempts reached. Could not fetch images.');
+          alert('Max attempts reached. Please check your connection or try again later.');
+        }
+      };
+    }, delay);
+  }
+
+  /**
+   * Adds a new image key to the thumbnails list and fetches its URL.
+   * 
+   * Adds the provided `newImageKey` to the `thumbnails` array.
+   * Fetches the image URL from S3 and stores it in `imageUrls`.
+   * Logs a success message when the image is added.
+   * Logs an error if fetching the image fails.
+   */
+  addNewImageToThumbnails(newImageKey: string): void {
+    // Add the new image key to the list
+    this.thumbnails.push(newImageKey);
+
+    // Fetch the new image URL from S3
+    this.userRegistrationService.getSpecificImageFromS3(newImageKey).subscribe(
+      (imageUrl) => {
+        // Add the URL to the imageUrls object
+        this.imageUrls[newImageKey] = imageUrl;
+        console.log(`New image added to cache for key: ${newImageKey}`);
+      },
+      (error) => {
+        console.error('Error fetching image:', error);
+      }
+    );
   }
 
   /**
