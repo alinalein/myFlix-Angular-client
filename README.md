@@ -6,10 +6,10 @@ The application provides multiple interface views, allowing users to interact wi
 [Movie_API](https://github.com/alinalein/movie_api)
 
 ## Technology Stack 
-◦❍ **Angular :** Front-end framework for building dynamic web applications with TypeScript.
-◦❍ **Angular Material :** UI component library for Angular, providing ready-to-use components following Material Design principles.
-◦❍ **TypeScript :** Superset of JavaScript that introduces static types, enhancing code reliability and maintainability.
-◦❍ **TypeDoc :** Documentation generator for TypeScript projects, automatically creating API documentation based on comments and code structure.
+◦❍ **Angular :** Front-end framework for building dynamic web applications with TypeScript.  
+◦❍ **Angular Material :** UI component library for Angular, providing ready-to-use components following Material Design principles.  
+◦❍ **TypeScript :** Superset of JavaScript that introduces static types, enhancing code reliability and maintainability.  
+◦❍ **TypeDoc :** Documentation generator for TypeScript projects, automatically creating API documentation based on comments and code structure.  
 
 ## Getting started
 ### Clone the repository
