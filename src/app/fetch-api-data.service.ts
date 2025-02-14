@@ -4,9 +4,9 @@ import { Observable, throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 // declaring the api url that will provide data for the client app
-// const apiUrl = 'https://movie-api-lina-834bc70d6952.herokuapp.com/';
+const apiUrl = 'https://movie-api-lina-834bc70d6952.herokuapp.com/';
 // const apiUrl = 'http://localhost:8080/';
-const apiUrl = 'http://2-2loadbalancer-974554670.eu-central-1.elb.amazonaws.com/';
+// const apiUrl = 'http://2-2loadbalancer-974554670.eu-central-1.elb.amazonaws.com/';
 
 // service for fetching data from the API
 @Injectable({
