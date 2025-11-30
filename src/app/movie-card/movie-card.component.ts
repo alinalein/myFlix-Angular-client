@@ -7,7 +7,6 @@ import { MovieSynopsisComponent } from '../movie-synopsis/movie-synopsis.compone
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { fakeAsync } from '@angular/core/testing';
 
 /**
  * @component - Component for displaying movies and actions to those movies.
