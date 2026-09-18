@@ -61,7 +61,7 @@ export class UserProfileComponent implements OnInit {
       this.favMovies = resp.filter((movie) => user.FavoriteMovies.includes(movie._id));
       this.noFavMoviesMessage = this.favMovies.length === 0;
       this.isLoading = false;
-      console.log('Favorite Movies:', this.favMovies);
+      // console.log('Favorite Movies:', this.favMovies);
     },
       (error: any) => {
         console.error('Error fetching favorite movies:', error);
@@ -79,7 +79,7 @@ export class UserProfileComponent implements OnInit {
     this.userRegistrationService.getUser().subscribe(
       (resp: {}) => {
         this.user = resp;
-        console.log('user: ', this.user)
+        // console.log('user: ', this.user)
       },
       (error: any) => {
         console.error('Error fetching user data:', error);
@@ -97,7 +97,7 @@ export class UserProfileComponent implements OnInit {
       next: (resp: any) => {
         localStorage.setItem('user', JSON.stringify(resp));
         this.user = resp;
-        console.log(this.user);
+        // console.log(this.user);
         this.snackBar.open('Your profile has been updated', 'OK', {
           duration: 3000
         });
@@ -131,7 +131,7 @@ export class UserProfileComponent implements OnInit {
         // logic for a successful user registration goes here
         this.dialog.closeAll()
         this.router.navigate(['welcome']);
-        console.log(result);
+        // console.log(result);
         this.snackBar.open('User deleted successfully', 'OK', { duration: 3000 });
       },
       error: (error) => {

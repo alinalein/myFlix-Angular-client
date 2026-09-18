@@ -52,7 +52,7 @@ export class UserLoginFormComponent implements OnInit {
     this.userRegistrationService.userLogin(this.userData).subscribe({
       next: (result) => {
         // logic for a successful user login goes here 
-        console.log(result);
+        // console.log(result);
         localStorage.setItem('user', JSON.stringify(result.user));
         localStorage.setItem('token', result.token);
         this.dialogRef.close(); // will close the modal UserLoginFormComponent on success

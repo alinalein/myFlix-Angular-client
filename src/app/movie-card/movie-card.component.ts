@@ -61,7 +61,7 @@ export class MovieCardComponent implements OnInit {
       (resp: any) => {
         this.movies = resp;
         this.isLoading = false;
-        console.log(this.movies)
+        // console.log(this.movies)
       }
     );
   }
@@ -81,7 +81,7 @@ export class MovieCardComponent implements OnInit {
       })
     ).subscribe((resp: any) => {
       this.favMovies = resp;
-      console.log(this.favMovies);
+      // console.log(this.favMovies);
       return this.favMovies
     });
   }

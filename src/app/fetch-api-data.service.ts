@@ -8,7 +8,6 @@ import { Observable, throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 // declaring the api url that will provide data for the client app
-// const apiUrl = 'https://movie-api-lina-834bc70d6952.herokuapp.com/';
 // const apiUrl = 'http://localhost:8080/';
 const apiUrl = 'https://my-flix-api-267292098478.europe-north1.run.app/';
 
@@ -60,7 +59,7 @@ export class UserRegistrationService {
    * @returns {Observable<any>} - Observable that emits the API response.
    */
   public userRegistration(userDetails: any): Observable<any> {
-    console.log(userDetails);
+    // console.log(userDetails);
     return this.http
       .post(apiUrl + 'users/signup', userDetails)
       .pipe(catchError(this.handleError));
